@@ -1,0 +1,17 @@
+{
+    "command": "stat",
+    "data": [
+        "000 OFF 19C 22,10C Low  Cool OK ",
+        "001 OFF 25C 24,20C Low  Cool OK ",
+        "002 OFF 20C 22,30C Low  Cool OK ",
+        "003 OFF 25C 26,40C Low  Cool OK ",
+        "004 OFF 24C 24,40C High Fan  OK ",
+        "005 OFF 25C 23,80C Low  Cool OK ",
+        "006 OFF 18C 24,20C Auto Cool OK ",
+        "007 OFF 22C 24,50C Med  Cool OK ",
+        "008 OFF 25C 24,40C Low  Cool OK ",
+        "009 OFF 25C 24,80C Low  Cool OK ",
+        "010 OFF 25C 25,30C Low  Cool OK "
+    ],
+    "rc": "OK"
+}
