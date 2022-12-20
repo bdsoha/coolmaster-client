@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosInstance} from 'axios' 
 
 
 export type ConnectionConfigs = {
@@ -9,16 +9,22 @@ export type ConnectionConfigs = {
 }
 
 export class CoolMasterNetConnection {
-    protected constructor(protected readonly client: axios.AxiosClient) { }
+    constructor(protected readonly client: AxiosInstance) { }
 
     public get baseURL() : string {
-        return self.client.baseURL
+        return this.client.defaults.baseURL
     }
     
-    public static connect(configs: ConnectionConfigs) {
+    public async ls() {
+        const {data} = await this.client.get('', {params: {command: 'ls'}})
+
+        return data
+    }
+
+    public static connect(configs: ConnectionConfigs = {}) {
         const host = configs.host ?? process.env.COOLMASTER_CLIENT_HOST ?? null
         const port = configs.port ?? process.env.COOLMASTER_CLIENT_PORT ?? 10103
-        const secure = configs.secure ?? process.env.COOLMASTER_CLIENT_SECURE ?? true
+        const secure = configs.secure ?? process.env.COOLMASTER_CLIENT_SECURE ?? false
         const device = configs.device ?? process.env.COOLMASTER_CLIENT_DEVICE ?? null
 
         const protocol = secure.toString().toLowerCase() === 'true' ? 'https' : 'http'
@@ -31,8 +37,8 @@ export class CoolMasterNetConnection {
             throw TypeError('Device is required')
         }
 
-        return new this(axios.client.create({
-            baseURL: `${protocol}://${host}:${port}/v1.0/device/${device}/`,
+        return new this(axios.create({
+            baseURL: `${protocol}://${host}:${port}/v1.0/device/${device}/raw`,
             headers: {
                 'Content-Type': 'application/json'
             }
