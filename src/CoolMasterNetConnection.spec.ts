@@ -1,17 +1,18 @@
 import { CoolMasterNetConnection } from './CoolMasterNetConnection'
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import { PowerStatus } from './types/PowerStatus'
 
 
 describe('CoolMasterNetConnector', () => {
     const env = process.env
-    
+
     beforeEach(() => {
         jest.resetModules()
         process.env = { ...env }
     })
 
-    afterEach(() =>         process.env = env )
+    afterEach(() => process.env = env)
 
     it('[connect] uses environment variables when available', () => {
         process.env.COOLMASTER_CLIENT_HOST = '192.168.1.111'
@@ -48,8 +49,8 @@ describe('CoolMasterNetConnector', () => {
     })
 
     it('[connect] raises an exception for required paramaters', () => {
-        const withoutDevice = () => CoolMasterNetConnection.connect({host: '192.168.1.111'})
-        const withoutHost = () => CoolMasterNetConnection.connect({device: '443B960055F0'})
+        const withoutDevice = () => CoolMasterNetConnection.connect({ host: '192.168.1.111' })
+        const withoutHost = () => CoolMasterNetConnection.connect({ device: '443B960055F0' })
 
         expect(withoutDevice).toThrow(TypeError)
         expect(withoutHost).toThrow(TypeError)
@@ -62,46 +63,42 @@ describe('Commands', () => {
     let instance: AxiosInstance
     let client: CoolMasterNetConnection
 
-    // const BASE_URL = 'http://192.168.1.111:10103/v1.0/device/443B960055F0/raw'
-  
     beforeAll(() => {
         instance = axios.create()
         mock = new MockAdapter(instance)
         client = new CoolMasterNetConnection(instance)
     })
-  
+
     afterEach(() => {
-        mock.reset();
+        mock.reset()
     })
 
 
     it('ls', async () => {
         mock.onGet(/.*/).reply(200, {})
-        
-        expect(client.ls()).resolves.toStrictEqual({
-            
-        })
 
-        expect(mock.history.get[0].params).toEqual(`/?command=ls`);
+        expect(client.ls()).resolves.toStrictEqual(lsResponse)
+
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'ls' })
     })
 
-    describe('set', () => {})
-    describe('props', () => {})
-    describe('info', () => {})
-    describe('on', () => {})
-    describe('allon', () => {})
-    describe('off', () => {})
-    describe('alloff', () => {})
-    describe('cool', () => {})
-    describe('heat', () => {})
-    describe('fan', () => {})
-    describe('dry', () => {})
-    describe('auto', () => {})
-    describe('temp', () => {})
-    describe('feed', () => {})
-    describe('fspeed', () => {})
-    describe('swing', () => {})
-    describe('filt', () => {})
-    describe('stat', () => {})
-    describe('ls2', () => {})
+    describe('set', () => { })
+    describe('props', () => { })
+    describe('info', () => { })
+    describe('on', () => { })
+    describe('allon', () => { })
+    describe('off', () => { })
+    describe('alloff', () => { })
+    describe('cool', () => { })
+    describe('heat', () => { })
+    describe('fan', () => { })
+    describe('dry', () => { })
+    describe('auto', () => { })
+    describe('temp', () => { })
+    describe('feed', () => { })
+    describe('fspeed', () => { })
+    describe('swing', () => { })
+    describe('filt', () => { })
+    describe('stat', () => { })
+    describe('ls2', () => { })
 })
