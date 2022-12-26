@@ -1,3 +1,6 @@
+import { EnumParser } from '../utilities'
+
+
 export enum Mode {
     COOL = 'cool',
     HEAT = 'heat',
@@ -7,8 +10,5 @@ export enum Mode {
 }
 
 export namespace Mode {
-    export function parse(mode: string): Mode {
-        // @ts-ignore
-        return Mode[mode.toUpperCase()]
-    }
+    export const parse = EnumParser.parse.bind(Mode)
 }

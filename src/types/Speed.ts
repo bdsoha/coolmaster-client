@@ -1,3 +1,5 @@
+import { EnumParser } from "../utilities";
+
 export enum Speed {
     LOW = 'low',
     MEDIUM = 'med',
@@ -6,10 +8,5 @@ export enum Speed {
 }
 
 export namespace Speed {
-    export function parse(speed: string): Speed {
-        const index = Object.values(Speed).indexOf(<any>speed.toLowerCase())
-
-        // @ts-ignore
-        return Speed[Object.keys(Speed).at(index)]
-    }
+    export const parse = EnumParser.parse.bind(Speed)
 }
