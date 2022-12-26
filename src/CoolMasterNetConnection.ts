@@ -22,6 +22,12 @@ export class CoolMasterNetConnection {
         return LSParser.parse(data)
     }
 
+    public async ls2() {
+        const {data} = await this.client.get('', {params: {command: 'ls2'}})
+
+        return LSParser.parse(data)
+    }
+
     public static connect(configs: ConnectionConfigs = {}) {
         const host = configs.host ?? process.env.COOLMASTER_CLIENT_HOST ?? null
         const port = configs.port ?? process.env.COOLMASTER_CLIENT_PORT ?? 10103

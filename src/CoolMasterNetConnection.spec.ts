@@ -1,8 +1,7 @@
 import { CoolMasterNetConnection } from './CoolMasterNetConnection'
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import lsResponse from './__stubs__/ls.response'
-import lsResponseJSON from './__stubs__/ls.response.json'
+import { json, response } from './__stubs__'
 
 
 describe('CoolMasterNetConnector', () => {
@@ -76,11 +75,19 @@ describe('Commands', () => {
 
 
     it('ls', async () => {
-        mock.onGet(/.*/).reply(200, lsResponseJSON)
+        mock.onGet(/.*/).reply(200, json.ls)
 
-        expect(client.ls()).resolves.toStrictEqual(lsResponse)
+        expect(client.ls()).resolves.toStrictEqual(response.ls)
 
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls' })
+    })
+    
+    it('ls2', async () => { 
+        mock.onGet(/.*/).reply(200, json.ls2)
+
+        expect(client.ls2()).resolves.toStrictEqual(response.ls2)
+
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'ls2' })
     })
 
     describe('set', () => { })
@@ -101,5 +108,4 @@ describe('Commands', () => {
     describe('swing', () => { })
     describe('filt', () => { })
     describe('stat', () => { })
-    describe('ls2', () => { })
 })

@@ -1,11 +1,10 @@
-import lsResponse from "../__stubs__/ls.response"
-import lsResponseJSON from "../__stubs__/ls.response.json"
-import { LSParser } from "./LSParser"
+import { json, response } from '../__stubs__'
+import { LSParser } from './LSParser'
 
 describe('LSParser', () => {
     it('[parse] parses a JSON response', () => {
-        const parsed = LSParser.parse(lsResponseJSON)
+        const parsed = LSParser.parse(json.ls)
 
-        expect(parsed).toStrictEqual(lsResponse)
+        expect(parsed).toStrictEqual(response.ls)
     })
 })
