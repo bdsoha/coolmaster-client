@@ -2,6 +2,7 @@ import { CoolMasterNetConnection } from './CoolMasterNetConnection'
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import lsResponse from './__stubs__/ls.response'
+import lsResponseJSON from './__stubs__/ls.response.json'
 
 
 describe('CoolMasterNetConnector', () => {
@@ -75,7 +76,7 @@ describe('Commands', () => {
 
 
     it('ls', async () => {
-        mock.onGet(/.*/).reply(200, {})
+        mock.onGet(/.*/).reply(200, lsResponseJSON)
 
         expect(client.ls()).resolves.toStrictEqual(lsResponse)
 

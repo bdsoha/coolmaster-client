@@ -39,7 +39,7 @@ export default [
         power: PowerStatus.OFF,
         targetTemp: new Temperature(25),
         currentTemp: new Temperature(26),
-        speed: Speed.LOW,
+        speed: Speed.MEDIUM,
         mode: Mode.COOL,
         failure: new FailureStatus(),
         filter: Filter.REQUIRES_CLEANING,

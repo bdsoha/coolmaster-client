@@ -1,4 +1,5 @@
 import axios, {AxiosInstance} from 'axios' 
+import { LSParser } from './parsers/LSParser'
 
 
 export type ConnectionConfigs = {
@@ -18,7 +19,7 @@ export class CoolMasterNetConnection {
     public async ls() {
         const {data} = await this.client.get('', {params: {command: 'ls'}})
 
-        return data
+        return LSParser.parse(data)
     }
 
     public static connect(configs: ConnectionConfigs = {}) {

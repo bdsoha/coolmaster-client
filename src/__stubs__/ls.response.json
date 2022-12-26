@@ -4,7 +4,7 @@
         "L7.000 OFF 19C 22C Low  Cool OK   # 0",
         "L7.001 OFF 25C 24C Low  Cool OK   - 0",
         "L7.002 OFF 20C 22C Low  Cool OK   - 0",
-        "L7.003 OFF 25C 26C Low  Cool OK   # 0",
+        "L7.003 OFF 25C 26C Med  Cool OK   # 0",
         "L7.004 OFF 24C 24C High Fan  OK   # 0",
         "L7.005 ON  25C 23C Auto Auto OK   - 0"
     ],
