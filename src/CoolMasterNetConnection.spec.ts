@@ -74,7 +74,7 @@ describe('Commands', () => {
     })
 
 
-    it('ls', async () => {
+    it('[ls] without unit-id', async () => {
         mock.onGet(/.*/).reply(200, json.ls)
 
         expect(client.ls()).resolves.toStrictEqual(response.ls)
@@ -82,21 +82,27 @@ describe('Commands', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls' })
     })
     
-    it('ls2', async () => { 
+    it.todo('[ls] with unit-id')
+    
+    it('[ls2] without unit-id', async () => { 
         mock.onGet(/.*/).reply(200, json.ls2)
 
         expect(client.ls2()).resolves.toStrictEqual(response.ls2)
 
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls2' })
     })
+    
+    it.todo('[ls2] with unit-id')
 
-    it('props', async () => { 
+    it('[props] get prop values', async () => { 
         mock.onGet(/.*/).reply(200, json.props)
 
         expect(client.props()).resolves.toStrictEqual(response.props)
 
         expect(mock.history.get[0].params).toStrictEqual({ command: 'props' })
     })
+    
+    it.todo('[props] set prop values')
 
     describe('set', () => { })
     describe('info', () => { })
@@ -114,5 +120,4 @@ describe('Commands', () => {
     describe('fspeed', () => { })
     describe('swing', () => { })
     describe('filt', () => { })
-    describe('stat', () => { })
 })
