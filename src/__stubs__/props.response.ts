@@ -1,3 +1,5 @@
+import { Mode, Speed, Temperature } from '../types'
+
 export default [
     {
         uid: 'L1.100',
@@ -6,9 +8,9 @@ export default [
         modes: [Mode.COOL, Mode.DRY, Mode.FAN, Mode.HEAT, Mode.AUTO],
         speeds: [Speed.LOW, Speed.MEDIUM, Speed.HIGH, Speed.AUTO],
         time: null,
-        coolRange: [Temperature(20), Temperature(24)],
-        heatRange: [Temperature(24), Temperature(26)],
-        lock: null
+        coolRange: [new Temperature(20), new Temperature(24)],
+        heatRange: [new Temperature(24), new Temperature(26)],
+        lock: false
     },
     {
         uid: 'L1.101',
@@ -17,9 +19,9 @@ export default [
         modes: [Mode.COOL, Mode.DRY, Mode.FAN, Mode.HEAT, Mode.AUTO],
         speeds: [Speed.LOW, Speed.MEDIUM, Speed.HIGH, Speed.AUTO],
         time: null,
-        coolRange: [Temperature(20), Temperature(24)],
-        heatRange: [Temperature(24), Temperature(26)],
-        lock: null
+        coolRange: [new Temperature(20), new Temperature(24)],
+        heatRange: [new Temperature(24), new Temperature(26)],
+        lock: false
     },
     {
         uid: 'L1.102',
@@ -28,9 +30,9 @@ export default [
         modes: [Mode.COOL, Mode.DRY, Mode.FAN, Mode.HEAT, Mode.AUTO],
         speeds: [Speed.LOW, Speed.MEDIUM, Speed.HIGH, Speed.AUTO],
         time: null,
-        coolRange: [Temperature(20), Temperature(24)],
-        heatRange: [Temperature(24), Temperature(26)],
-        lock: null
+        coolRange: [new Temperature(20), new Temperature(24)],
+        heatRange: [new Temperature(24), new Temperature(26)],
+        lock: false
     },
     {
         uid: 'L1.103',
@@ -39,9 +41,9 @@ export default [
         modes: [Mode.COOL, Mode.DRY, Mode.FAN, Mode.HEAT, Mode.AUTO],
         speeds: [Speed.LOW, Speed.MEDIUM, Speed.HIGH, Speed.AUTO],
         time: null,
-        coolRange: [Temperature(20), Temperature(24)],
-        heatRange: [Temperature(24), Temperature(26)],
-        lock: null
+        coolRange: [new Temperature(20), new Temperature(24)],
+        heatRange: [new Temperature(24), new Temperature(26)],
+        lock: false
     },
     {
         uid: 'L1.104',
@@ -50,9 +52,9 @@ export default [
         modes: [Mode.COOL, Mode.DRY, Mode.FAN, Mode.HEAT, Mode.AUTO],
         speeds: [Speed.LOW, Speed.MEDIUM, Speed.HIGH, Speed.AUTO],
         time: null,
-        coolRange: [Temperature(20), Temperature(24)],
-        heatRange: [Temperature(24), Temperature(26)],
-        lock: null
+        coolRange: [new Temperature(20), new Temperature(24)],
+        heatRange: [new Temperature(24), new Temperature(26)],
+        lock: false
     },
     {
         uid: 'L7.000',
@@ -63,7 +65,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.002',
@@ -74,7 +76,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.003',
@@ -85,7 +87,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.004',
@@ -96,7 +98,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.005',
@@ -107,7 +109,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.006',
@@ -118,7 +120,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.007',
@@ -129,7 +131,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.008',
@@ -140,7 +142,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },   
     {
         uid: 'L7.009',
@@ -151,7 +153,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.010',
@@ -162,7 +164,7 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
     {
         uid: 'L7.011',
@@ -173,6 +175,6 @@ export default [
         time: null,
         coolRange: null,
         heatRange: null,
-        lock: null
+        lock: false
     },
 ]

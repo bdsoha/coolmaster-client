@@ -90,8 +90,15 @@ describe('Commands', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls2' })
     })
 
+    it('props', async () => { 
+        mock.onGet(/.*/).reply(200, json.props)
+
+        expect(client.props()).resolves.toStrictEqual(response.props)
+
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'props' })
+    })
+
     describe('set', () => { })
-    describe('props', () => { })
     describe('info', () => { })
     describe('on', () => { })
     describe('allon', () => { })

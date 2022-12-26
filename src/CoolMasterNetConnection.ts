@@ -1,5 +1,6 @@
 import axios, {AxiosInstance} from 'axios' 
 import { LSParser } from './parsers/LSParser'
+import { PropsParser } from './parsers/PropsParser'
 
 
 export type ConnectionConfigs = {
@@ -11,7 +12,7 @@ export type ConnectionConfigs = {
 
 export class CoolMasterNetConnection {
     constructor(protected readonly client: AxiosInstance) { }
-
+    
     public get baseURL() : string {
         return this.client.defaults.baseURL
     }
@@ -21,11 +22,17 @@ export class CoolMasterNetConnection {
 
         return LSParser.parse(data)
     }
-
+    
     public async ls2() {
         const {data} = await this.client.get('', {params: {command: 'ls2'}})
-
+        
         return LSParser.parse(data)
+    }
+    
+    public async props() {
+        const {data} = await this.client.get('', {params: {command: 'props'}})
+
+        return PropsParser.parse(data)
     }
 
     public static connect(configs: ConnectionConfigs = {}) {

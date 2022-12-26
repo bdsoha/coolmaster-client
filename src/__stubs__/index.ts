@@ -1,16 +1,11 @@
-import lsJSON from './ls.response.json'
-import ls from './ls.response'
-
-import ls2JSON from './ls2.response.json'
-import ls2 from './ls2.response'
-
-
 export const json = {
-    ls: lsJSON,
-    ls2: ls2JSON
+    ls: require('./ls.response.json'),
+    ls2: require('./ls2.response.json'),
+    props: require('./props.response.json'),
 }
 
 export const response = {
-    ls,
-    ls2
+    ls: require('./ls.response').default,
+    ls2: require('./ls2.response').default,
+    props: require('./props.response').default,
 }
