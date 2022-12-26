@@ -1,7 +1,7 @@
 import { CoolMasterNetConnection } from './CoolMasterNetConnection'
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { PowerStatus } from './types/PowerStatus'
+import lsResponse from './__stubs__/ls.response'
 
 
 describe('CoolMasterNetConnector', () => {

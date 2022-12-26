@@ -3,8 +3,9 @@ export enum PowerStatus {
     OFF = 'off'
 }
 
-namespace PowerStatus {
+export namespace PowerStatus {
     export function parse(status: string): PowerStatus {
+        // @ts-ignore
         return PowerStatus[status.toUpperCase()];
     }
 }

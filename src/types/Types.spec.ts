@@ -1,3 +1,5 @@
+import { PowerStatus } from "./PowerStatus"
+
 describe('Types', () => {
     describe('PowerStatus', () => {
         it('[parse] receives upper or lower case', () => {

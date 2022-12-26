@@ -6,8 +6,9 @@ export enum Mode {
     AUTO = 'auto'
 }
 
-namespace Mode {
+export namespace Mode {
     export function parse(mode: string): Mode {
-        return Mode[mode.toUpperCase()];
+        // @ts-ignore
+        return Mode[mode.toUpperCase()]
     }
 }
