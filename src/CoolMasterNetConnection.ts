@@ -1,8 +1,4 @@
 import axios, { AxiosInstance } from 'axios'
-import { LSParser } from './parsers/LSParser'
-import { PropsParser } from './parsers/PropsParser'
-import { GenericParser } from './parsers/GenericParser'
-import { Parsable } from './types'
 
 
 export type ConnectionConfigs = {
@@ -13,52 +9,7 @@ export type ConnectionConfigs = {
 }
 
 export class CoolMasterNetConnection {
-    constructor(protected readonly client: AxiosInstance) { }
-
-    protected async call(command: string, parser: Parsable, ...args: string[]) {
-        const query = [command, ...args]
-            .filter(Boolean)
-            .map(param => param.replace(/\./g, '_'))
-            .join('&')
-
-        const { data } = await this.client.get('', { params: { command: query } })
-
-        return parser.parse(data)
-    }
-
-    public get baseURL(): string {
-        return this.client.defaults.baseURL
-    }
-
-    public async ls() {
-        return await this.call('ls', LSParser)
-    }
-
-    public async ls2() {
-        return await this.call('ls2', LSParser)
-    }
-
-    public async props() {
-        return await this.call('props', PropsParser)
-    }
-
-    public async on(uid?: string) {
-        return await this.call('on', GenericParser, uid)
-    }
-
-    public async allOn() {
-        return this.on()
-    }
-
-    public async off(uid?: string) {
-        return await this.call('off', GenericParser, uid)
-    }
-
-    public async allOff() {
-        return this.off()
-    }
-
-    public static connect(configs: ConnectionConfigs = {}) {
+    public static connect(configs: ConnectionConfigs = {}): AxiosInstance {
         const host = configs.host ?? process.env.COOLMASTER_CLIENT_HOST ?? null
         const port = configs.port ?? process.env.COOLMASTER_CLIENT_PORT ?? 10103
         const secure = configs.secure ?? process.env.COOLMASTER_CLIENT_SECURE ?? false
@@ -74,11 +25,11 @@ export class CoolMasterNetConnection {
             throw TypeError('Device is required')
         }
 
-        return new this(axios.create({
+        return axios.create({
             baseURL: `${protocol}://${host}:${port}/v1.0/device/${device}/raw`,
             headers: {
                 'Content-Type': 'application/json'
             }
-        }))
+        })
     }
 }
