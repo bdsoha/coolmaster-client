@@ -77,7 +77,7 @@ describe('Commands', () => {
     it('[ls] without unit-id', async () => {
         mock.onGet(/.*/).reply(200, json.ls)
 
-        expect(client.ls()).resolves.toStrictEqual(response.ls)
+        await expect(client.ls()).resolves.toStrictEqual(response.ls)
 
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls' })
     })
@@ -87,7 +87,7 @@ describe('Commands', () => {
     it('[ls2] without unit-id', async () => { 
         mock.onGet(/.*/).reply(200, json.ls2)
 
-        expect(client.ls2()).resolves.toStrictEqual(response.ls2)
+        await expect(client.ls2()).resolves.toStrictEqual(response.ls2)
 
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls2' })
     })
@@ -97,7 +97,7 @@ describe('Commands', () => {
     it('[props] get prop values', async () => { 
         mock.onGet(/.*/).reply(200, json.props)
         
-        expect(client.props()).resolves.toStrictEqual(response.props)
+        await expect(client.props()).resolves.toStrictEqual(response.props)
         
         expect(mock.history.get[0].params).toStrictEqual({ command: 'props' })
     })
@@ -107,7 +107,7 @@ describe('Commands', () => {
     it('[on] without unit-id', async () => { 
         mock.onGet(/.*/).reply(200, json.generic)
 
-        expect(client.on()).resolves.toBeTruthy()
+        await expect(client.on()).resolves.toBeTruthy()
         
         expect(mock.history.get[0].params).toStrictEqual({ command: 'on' })
     })
@@ -117,7 +117,7 @@ describe('Commands', () => {
     it('[off] without unit-id', async () => { 
         mock.onGet(/.*/).reply(200, json.generic)
 
-        expect(client.off()).resolves.toBeTruthy()
+        await expect(client.off()).resolves.toBeTruthy()
         
         expect(mock.history.get[0].params).toStrictEqual({ command: 'off' })
     })
