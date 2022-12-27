@@ -3,7 +3,7 @@ export const json = {
     ls2: require('./ls2.response.json'),
     props: require('./props.response.json'),
     generic: require('./generic.response.json'),
-}
+} as Record<string, any>
 
 export const response = {
     ls: require('./ls.response').default,
