@@ -40,9 +40,17 @@ export class CoolMasterNetConnection {
     public async on() {
         return await this.call('on', GenericParser)
     }
+
+    public async allOn() {
+        return this.on()
+    }
     
     public async off() {
         return await this.call('off', GenericParser)
+    }
+
+    public async allOff() {
+        return this.off()
     }
 
     public static connect(configs: ConnectionConfigs = {}) {

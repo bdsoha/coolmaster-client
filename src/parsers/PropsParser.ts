@@ -1,4 +1,4 @@
-import { Temperature, Speed, Mode } from '../types'
+import { Temperature, Speed, Mode, Parsable } from '../types'
 
 export interface PropsEntry {
     uid: string
@@ -13,11 +13,11 @@ export interface PropsEntry {
 }
 
 export class PropsParser {
-    protected static fromLetters(cell: string, type: any): any[] {
+    protected static fromLetters(cell: string, type: Parsable): any[] {
         return cell.split(' ').filter(Boolean).map(letter => type.parse(letter))
     }
 
-    protected static fromRange(cell: string, type: any): [Temperature | null, Temperature | null] {
+    protected static fromRange(cell: string, type: Parsable): [Temperature | null, Temperature | null] {
         // @ts-ignore
         return cell.split(' ').map(letter => {
             if (letter === '--') {

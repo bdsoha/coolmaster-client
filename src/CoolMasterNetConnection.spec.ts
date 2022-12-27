@@ -62,12 +62,9 @@ describe('Commands', () => {
     let mock: any
     let instance: AxiosInstance
     let client: CoolMasterNetConnection
-
-    const request = (reply: any, actual: any) => {
-        mock.onGet(/.*/).reply(200, reply)
-
-        return expect(actual).resolves
-    }
+    
+    // @ts-ignore
+    const setupMock = (key: string) => mock.onGet(/.*/).reply(200, json[key])
 
     beforeAll(() => {
         instance = axios.create()
@@ -79,50 +76,75 @@ describe('Commands', () => {
         mock.reset()
     })
 
-    it('[ls] without unit-id', async () => {
-        await request(json.ls, client.ls()).toStrictEqual(response.ls)
 
+    it('[ls] without unit-id', async () => {
+        setupMock('ls')
+        
+        await expect(client.ls()).resolves.toStrictEqual(response.ls)
+        
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls' })
     })
     
     it.todo('[ls] with unit-id')
     
     it('[ls2] without unit-id', async () => { 
-        await request(json.ls2, client.ls2()).toStrictEqual(response.ls2)
-
+        setupMock('ls2')
+        
+        await expect(client.ls2()).resolves.toStrictEqual(response.ls2)
+        
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls2' })
     })
     
     it.todo('[ls2] with unit-id')
     
     it('[props] get prop values', async () => { 
-        await request(json.props, client.props()).toStrictEqual(response.props)
-                
+        setupMock('props')
+        
+        await expect(client.props()).resolves.toStrictEqual(response.props)
+        
         expect(mock.history.get[0].params).toStrictEqual({ command: 'props' })
     })
     
     it.todo('[props] set prop values')
     
     it('[on] without unit-id', async () => { 
-        await request(json.generic, client.on()).toBeTruthy()
+        setupMock('generic')
+        
+        await expect(client.on()).resolves.toBeTruthy()
         
         expect(mock.history.get[0].params).toStrictEqual({ command: 'on' })
     })
     
     it.todo('[on] with unit-id')
 
+    it('[allOn] alias of on()', async () => { 
+        setupMock('generic')
+        
+        await expect(client.allOn()).resolves.toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'on' })
+    })
+    
     it('[off] without unit-id', async () => { 
-        await request(json.generic, client.off()).toBeTruthy()
+        setupMock('generic')
+        
+        await expect(client.off()).resolves.toBeTruthy()
         
         expect(mock.history.get[0].params).toStrictEqual({ command: 'off' })
     })
     
     it.todo('[off] with unit-id')
+
+    it('[allOff] alias of off()', async () => { 
+        setupMock('generic')
+        
+        await expect(client.allOff()).resolves.toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'off' })
+    })
     
     describe('set', () => { })
     describe('info', () => { })
-    describe('allon', () => { })
-    describe('alloff', () => { })
     describe('cool', () => { })
     describe('heat', () => { })
     describe('fan', () => { })
