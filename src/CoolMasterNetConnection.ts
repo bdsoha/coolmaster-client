@@ -1,4 +1,4 @@
-import axios, {AxiosInstance} from 'axios' 
+import axios, { AxiosInstance } from 'axios'
 import { LSParser } from './parsers/LSParser'
 import { PropsParser } from './parsers/PropsParser'
 import { GenericParser } from './parsers/GenericParser'
@@ -14,39 +14,44 @@ export type ConnectionConfigs = {
 
 export class CoolMasterNetConnection {
     constructor(protected readonly client: AxiosInstance) { }
-    
-    protected async call(command: string, parser: Parsable) {
-        const {data} = await this.client.get('', {params: {command}})
+
+    protected async call(command: string, parser: Parsable, ...args: string[]) {
+        const query = [command, ...args]
+            .filter(Boolean)
+            .map(param => param.replace(/\./g, '_'))
+            .join('&')
+
+        const { data } = await this.client.get('', { params: { command: query } })
 
         return parser.parse(data)
     }
 
-    public get baseURL() : string {
+    public get baseURL(): string {
         return this.client.defaults.baseURL
     }
-    
+
     public async ls() {
         return await this.call('ls', LSParser)
     }
-    
+
     public async ls2() {
         return await this.call('ls2', LSParser)
     }
-    
+
     public async props() {
         return await this.call('props', PropsParser)
     }
-    
-    public async on() {
-        return await this.call('on', GenericParser)
+
+    public async on(uid?: string) {
+        return await this.call('on', GenericParser, uid)
     }
 
     public async allOn() {
         return this.on()
     }
-    
-    public async off() {
-        return await this.call('off', GenericParser)
+
+    public async off(uid?: string) {
+        return await this.call('off', GenericParser, uid)
     }
 
     public async allOff() {

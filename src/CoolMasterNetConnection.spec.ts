@@ -109,7 +109,11 @@ describe('Commands', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'on' })
     })
     
-    it.todo('[on] with unit-id')
+    it('[on] with unit-id', async () => {
+        await call('generic', () => client.on('L7.001')).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'on&L7_001' })
+    })
 
     it('[allOn] alias of on()', async () => { 
         await call('generic', () => client.allOn()).toBeTruthy()
@@ -123,7 +127,11 @@ describe('Commands', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'off' })
     })
     
-    it.todo('[off] with unit-id')
+    it('[off] with unit-id', async () => {
+        await call('generic', () => client.off('L7.001')).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'off&L7_001' })
+    })
 
     it('[allOff] alias of off()', async () => { 
         await call('generic', () => client.allOff()).toBeTruthy()
