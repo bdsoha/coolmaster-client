@@ -63,7 +63,7 @@ describe('Commands', () => {
     let instance: AxiosInstance
     let client: CoolMasterNetConnection
 
-    const request = async (reply, actual) => {
+    const request = async (reply: any, actual: any) => {
         mock.onGet(/.*/).reply(200, reply)
 
         return expect(actual).resolves
