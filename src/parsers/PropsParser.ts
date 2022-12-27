@@ -14,17 +14,17 @@ export interface PropsEntry {
 
 export class PropsParser {
     protected static fromLetters(cell: string, type: any): any[] {
-        return cell.split(' ').map(letter => type.parse(letter))
+        return cell.split(' ').filter(Boolean).map(letter => type.parse(letter))
     }
 
-    protected static fromRange(cell: string): [Temperature | null, Temperature | null] {
+    protected static fromRange(cell: string, type: any): [Temperature | null, Temperature | null] {
         // @ts-ignore
         return cell.split(' ').map(letter => {
             if (letter === '--') {
                 return null
             }
 
-            return Temperature.parse(letter)
+            return type.parse(letter)
         })
     }
 
@@ -42,9 +42,9 @@ export class PropsParser {
                 visible: !!parseInt(normalized[2]),
                 modes: this.fromLetters(normalized[3], Mode),
                 speeds: this.fromLetters(normalized[4], Speed),
-                time: normalized[5], // @TODO
-                coolRange: this.fromRange(normalized[6]),
-                heatRange: this.fromRange(normalized[7]),
+                time: this.fromRange(normalized[5], null),
+                coolRange: this.fromRange(normalized[6], Temperature),
+                heatRange: this.fromRange(normalized[7], Temperature),
                 lock: !!parseInt(normalized[8])
             }
         })
