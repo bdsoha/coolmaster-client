@@ -1,10 +1,7 @@
 import { EnumParser } from "../utilities";
 
-
-
-
 export enum Speed {
-    VERY_LOW = 'very_low',
+    VERY_LOW = 'vlow',
     LOW = 'low',
     MEDIUM = 'med',
     HIGH = 'high',

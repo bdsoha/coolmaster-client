@@ -6,9 +6,9 @@ describe('Speed', () => {
         expect(Speed.parse('Auto')).toBe(Speed.AUTO)
         expect(Speed.parse('AUTO')).toBe(Speed.AUTO)
         
-        expect(Speed.parse('very_low')).toBe(Speed.VERY_LOW)
-        expect(Speed.parse('Very_Low')).toBe(Speed.VERY_LOW)
-        expect(Speed.parse('VERY_LOW')).toBe(Speed.VERY_LOW)
+        expect(Speed.parse('vlow')).toBe(Speed.VERY_LOW)
+        expect(Speed.parse('Vlow')).toBe(Speed.VERY_LOW)
+        expect(Speed.parse('VLOW')).toBe(Speed.VERY_LOW)
 
         expect(Speed.parse('low')).toBe(Speed.LOW)
         expect(Speed.parse('Low')).toBe(Speed.LOW)

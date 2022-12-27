@@ -6,19 +6,19 @@ export default [
         power: PowerStatus.OFF,
         targetTemp: new Temperature(19),
         currentTemp: new Temperature(22),
-        speed: Speed.LOW,
-        mode: Mode.COOL,
+        speed: Speed.VERY_LOW,
+        mode: Mode.HEAT,
         failure: new FailureStatus(),
         filter: Filter.REQUIRES_CLEANING,
-        demand: 0
+        demand: 1
     },
     {
         uid: 'L7.001',
         power: PowerStatus.OFF,
         targetTemp: new Temperature(25),
         currentTemp: new Temperature(24.2),
-        speed: Speed.LOW,
-        mode: Mode.COOL,
+        speed: Speed.TOP,
+        mode: Mode.DRY,
         failure: new FailureStatus(),
         filter: Filter.CLEAN,
         demand: 0

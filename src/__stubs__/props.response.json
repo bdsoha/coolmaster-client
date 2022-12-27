@@ -8,7 +8,7 @@
         "L1.102 | -              |  1   | c d f h       a |   l m h   a |--  --|20  24|24  26|           |",
         "L1.103 | -              |  1   | c d f h       a |   l m h   a |--  --|20  24|24  26|           |",
         "L1.104 | -              |  1   | c d f h       a |   l m h   a |--  --|20  24|24  26|           |",
-        "L7.010 | Living Room    |  1   | c d f h         | v l m h t a |--  --|--  --|--  --|           |",
+        "L7.010 | Living Room    |  1   | c d f h         | v l m h t a |--  --|20  --|--  26|           |",
         "L7.001 | Dining Room 2  |  0   | c d f           | v l m h t   |--  --|--  --|--  --|           |",
         "L7.000 | Guest Unit     |  1   | c d             | v l m h     |--  --|--  --|--  --|           |",
         "L7.008 | Dining Room    |  1   | c               | v l m       |--  --|--  --|--  --|           |",

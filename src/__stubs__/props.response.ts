@@ -63,8 +63,8 @@ export default [
         modes: [Mode.COOL, Mode.DRY, Mode.FAN, Mode.HEAT],
         speeds: [Speed.VERY_LOW, Speed.LOW, Speed.MEDIUM, Speed.HIGH, Speed.TOP, Speed.AUTO],
         time: [null, null],
-        coolRange: [null, null],
-        heatRange: [null, null],
+        coolRange: [new Temperature(20), null],
+        heatRange: [null, new Temperature(26)],
         lock: false
     },
     {
