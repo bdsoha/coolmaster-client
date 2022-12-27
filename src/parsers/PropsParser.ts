@@ -7,18 +7,25 @@ export interface PropsEntry {
     modes: Mode[]
     speeds: Speed[]
     time: null
-    coolRange: [Temperature | null, Temperature|null]
-    heatRange: [Temperature| null, Temperature| null]
+    coolRange: [Temperature | null, Temperature | null]
+    heatRange: [Temperature | null, Temperature | null]
     lock: boolean
 }
 
 export class PropsParser {
-    protected static modes(cell: string): Mode[] {
-        return cell.split(' ').map(letter => Mode.parse(letter))
+    protected static fromLetters(cell: string, type: any): any[] {
+        return cell.split(' ').map(letter => type.parse(letter))
     }
 
-    protected static speeds(cell: string): Speed[] {
-        return cell.split(' ').map(letter => Speed.parse(letter))
+    protected static fromRange(cell: string): [Temperature | null, Temperature | null] {
+        // @ts-ignore
+        return cell.split(' ').map(letter => {
+            if (letter === '--') {
+                return null
+            }
+
+            return Temperature.parse(letter)
+        })
     }
 
     public static parse(json: any): PropsEntry[] {
@@ -33,11 +40,11 @@ export class PropsParser {
                 uid: normalized[0],
                 name: normalized[1],
                 visible: !!parseInt(normalized[2]),
-                modes: this.modes(normalized[3]),
-                speed: this.speeds(normalized[4]),
+                modes: this.fromLetters(normalized[3], Mode),
+                speeds: this.fromLetters(normalized[4], Speed),
                 time: normalized[5], // @TODO
-                coolRange: normalized[6], // @TODO
-                heatRange: normalized[7], // @TODO
+                coolRange: this.fromRange(normalized[6]),
+                heatRange: this.fromRange(normalized[7]),
                 lock: !!parseInt(normalized[8])
             }
         })
