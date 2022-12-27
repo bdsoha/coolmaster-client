@@ -93,22 +93,40 @@ describe('Commands', () => {
     })
     
     it.todo('[ls2] with unit-id')
-
+    
     it('[props] get prop values', async () => { 
         mock.onGet(/.*/).reply(200, json.props)
-
+        
         expect(client.props()).resolves.toStrictEqual(response.props)
-
+        
         expect(mock.history.get[0].params).toStrictEqual({ command: 'props' })
     })
     
     it.todo('[props] set prop values')
+    
+    it('[on] without unit-id', async () => { 
+        mock.onGet(/.*/).reply(200, json.generic)
 
+        expect(client.on()).resolves.toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'on' })
+    })
+    
+    it.todo('[on] with unit-id')
+
+    it('[off] without unit-id', async () => { 
+        mock.onGet(/.*/).reply(200, json.generic)
+
+        expect(client.off()).resolves.toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'off' })
+    })
+    
+    it.todo('[off] with unit-id')
+    
     describe('set', () => { })
     describe('info', () => { })
-    describe('on', () => { })
     describe('allon', () => { })
-    describe('off', () => { })
     describe('alloff', () => { })
     describe('cool', () => { })
     describe('heat', () => { })

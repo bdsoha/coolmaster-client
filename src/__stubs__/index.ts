@@ -2,6 +2,7 @@ export const json = {
     ls: require('./ls.response.json'),
     ls2: require('./ls2.response.json'),
     props: require('./props.response.json'),
+    generic: require('./generic.response.json'),
 }
 
 export const response = {

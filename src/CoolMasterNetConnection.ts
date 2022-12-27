@@ -1,6 +1,8 @@
 import axios, {AxiosInstance} from 'axios' 
 import { LSParser } from './parsers/LSParser'
 import { PropsParser } from './parsers/PropsParser'
+import { GenericParser } from './parsers/GenericParser'
+import { Parsable } from './types'
 
 
 export type ConnectionConfigs = {
@@ -13,26 +15,34 @@ export type ConnectionConfigs = {
 export class CoolMasterNetConnection {
     constructor(protected readonly client: AxiosInstance) { }
     
+    protected async call(command: string, parser: Parsable) {
+        const {data} = await this.client.get('', {params: {command}})
+
+        return parser.parse(data)
+    }
+
     public get baseURL() : string {
         return this.client.defaults.baseURL
     }
     
     public async ls() {
-        const {data} = await this.client.get('', {params: {command: 'ls'}})
-
-        return LSParser.parse(data)
+        return await this.call('ls', LSParser)
     }
     
     public async ls2() {
-        const {data} = await this.client.get('', {params: {command: 'ls2'}})
-        
-        return LSParser.parse(data)
+        return await this.call('ls2', LSParser)
     }
     
     public async props() {
-        const {data} = await this.client.get('', {params: {command: 'props'}})
-
-        return PropsParser.parse(data)
+        return await this.call('props', PropsParser)
+    }
+    
+    public async on() {
+        return await this.call('on', GenericParser)
+    }
+    
+    public async off() {
+        return await this.call('off', GenericParser)
     }
 
     public static connect(configs: ConnectionConfigs = {}) {
