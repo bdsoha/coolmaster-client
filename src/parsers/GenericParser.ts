@@ -1,5 +1,7 @@
+import { Response } from "../types"
+
 export class GenericParser {
-    public static parse(json: any) {
-        return json.rc === 'OK'
+    public static parse(response: Response) {
+        return response.rc === 'OK'
     }
 }

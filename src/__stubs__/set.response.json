@@ -8,7 +8,7 @@
         "USB VCOM Port : 1",
         "baud rate     : 9600",
         "echo          : 1",
-        "verbose       : 1",
+        "verbose       : 0",
         "VA mode       : 0",
         "aserver port  : 10102",
         "aserver prompt: 1",

@@ -9,7 +9,7 @@ export type ConnectionConfigs = {
 }
 
 export class CoolMasterNetConnection {
-    public static connect(configs: ConnectionConfigs = {}): AxiosInstance {
+    public static create(configs: ConnectionConfigs = {}): AxiosInstance {
         const host = configs.host ?? process.env.COOLMASTER_CLIENT_HOST ?? null
         const port = configs.port ?? process.env.COOLMASTER_CLIENT_PORT ?? 10103
         const secure = configs.secure ?? process.env.COOLMASTER_CLIENT_SECURE ?? false

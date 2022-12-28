@@ -85,7 +85,14 @@ describe('CoolMasterNetClient', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'off' })
     })
     
-    describe('set', () => { })
+    it('[set] get set values', async () => { 
+        await call('set', () => client.set()).toStrictEqual(response.set)
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'set' })
+    })
+    
+    it.todo('[set] set set values')
+    
     describe('info', () => { })
     describe('cool', () => { })
     describe('heat', () => { })

@@ -1,4 +1,4 @@
-import { Temperature, Speed, Mode, Parsable } from '../types'
+import { Temperature, Speed, Mode, Parsable, Response } from '../types'
 
 export interface PropsEntry {
     uid: string
@@ -23,19 +23,20 @@ export class PropsParser {
             if (letter === '--') {
                 return null
             }
-
+            
             return type.parse(letter)
         })
     }
 
-    public static parse(json: any): PropsEntry[] {
-        const { data } = json
+    public static parse(response: Response): PropsEntry[] {
+        const { data } = response
 
         data.splice(0, 2)
 
-        return data.map((entry: string) => {
+        // @ts-ignore
+        return data.map(entry => {
             const normalized = entry.replace(/  +/g, ' ').split('|').map(cell => cell.trim())
-
+            
             return {
                 uid: normalized[0],
                 name: normalized[1],

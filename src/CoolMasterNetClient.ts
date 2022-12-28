@@ -1,9 +1,10 @@
-import axios, { AxiosInstance } from 'axios'
+import { AxiosInstance } from 'axios'
 import { LSParser } from './parsers/LSParser'
 import { PropsParser } from './parsers/PropsParser'
 import { GenericParser } from './parsers/GenericParser'
 import { Parsable } from './types'
 import { CoolMasterNetConnection, ConnectionConfigs } from './CoolMasterNetConnection'
+import { SetParser } from './parsers/SetParser'
 
 
 export class CoolMasterNetClient {
@@ -36,6 +37,10 @@ export class CoolMasterNetClient {
         return await this.call('props', PropsParser)
     }
 
+    public async set() {
+        return await this.call('set', SetParser)
+    }
+
     public async on(uid?: string) {
         return await this.call('on', GenericParser, uid)
     }
@@ -54,7 +59,7 @@ export class CoolMasterNetClient {
 
     public static connect(configs: ConnectionConfigs = {}) {
         return new this(
-            CoolMasterNetConnection.connect(configs)
+            CoolMasterNetConnection.create(configs)
         )
     }
 }

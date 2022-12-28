@@ -1,8 +1,7 @@
 import { CoolMasterNetConnection } from './CoolMasterNetConnection'
-import axios from 'axios'
 
 
-describe('CoolMasterNetConnector', () => {
+describe('CoolMasterNetConnection', () => {
     const env = process.env
 
     beforeEach(() => {
@@ -12,44 +11,40 @@ describe('CoolMasterNetConnector', () => {
 
     afterEach(() => process.env = env)
 
-    it('[connect] uses environment variables when available', () => {
+    it('[create] uses environment variables when available', () => {
         process.env.COOLMASTER_CLIENT_HOST = '192.168.1.111'
         process.env.COOLMASTER_CLIENT_PORT = '1234'
         process.env.COOLMASTER_CLIENT_SECURE = 'true'
         process.env.COOLMASTER_CLIENT_DEVICE = '443B960055F0'
 
-        const client = CoolMasterNetConnection.connect()
+        const client = CoolMasterNetConnection.create()
 
-        expect(client).toBeInstanceOf(axios)
-        // client.defaults.baseURL
-        // @TODO: expect(client).toHaveProperty('baseURL', 'https://192.168.1.111:1234/v1.0/device/443B960055F0/raw')
+        expect(client.defaults).toHaveProperty('baseURL', 'https://192.168.1.111:1234/v1.0/device/443B960055F0/raw')
     })
 
-    it('[connect] uses paramaters when available', () => {
-        const client = CoolMasterNetConnection.connect({
+    it('[create] uses paramaters when available', () => {
+        const client = CoolMasterNetConnection.create({
             host: '192.168.1.111',
             port: 1234,
             secure: true,
             device: '443B960055F0',
         })
 
-        expect(client).toBeInstanceOf(axios)
-        // @TODO: expect(client).toHaveProperty('baseURL', 'https://192.168.1.111:1234/v1.0/device/443B960055F0/raw')
+        expect(client.defaults).toHaveProperty('baseURL', 'https://192.168.1.111:1234/v1.0/device/443B960055F0/raw')
     })
 
-    it('[connect] uses a default port and is insecure', () => {
-        const client = CoolMasterNetConnection.connect({
+    it('[create] uses a default port and is insecure', () => {
+        const client = CoolMasterNetConnection.create({
             host: '192.168.1.111',
             device: '443B960055F0',
         })
 
-        expect(client).toBeInstanceOf(axios)
-        // @TODO: expect(client).toHaveProperty('baseURL', 'http://192.168.1.111:10103/v1.0/device/443B960055F0/raw')
+        expect(client.defaults).toHaveProperty('baseURL', 'http://192.168.1.111:10103/v1.0/device/443B960055F0/raw')
     })
 
-    it('[connect] raises an exception for required paramaters', () => {
-        const withoutDevice = () => CoolMasterNetConnection.connect({ host: '192.168.1.111' })
-        const withoutHost = () => CoolMasterNetConnection.connect({ device: '443B960055F0' })
+    it('[create] raises an exception for required paramaters', () => {
+        const withoutDevice = () => CoolMasterNetConnection.create({ host: '192.168.1.111' })
+        const withoutHost = () => CoolMasterNetConnection.create({ device: '443B960055F0' })
 
         expect(withoutDevice).toThrow(TypeError)
         expect(withoutHost).toThrow(TypeError)

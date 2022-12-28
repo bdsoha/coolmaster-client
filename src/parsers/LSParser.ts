@@ -1,4 +1,4 @@
-import { PowerStatus, Temperature, Speed, Mode, Filter, FailureStatus } from '../types'
+import { PowerStatus, Temperature, Speed, Mode, Filter, FailureStatus, Response } from '../types'
 
 export interface LSEntry {
     uid: string
@@ -13,8 +13,8 @@ export interface LSEntry {
 }
 
 export class LSParser {
-    public static parse(json: any): LSEntry[] {
-        return json.data.map((entry: string) => {
+    public static parse(response: Response): LSEntry[] {
+        return response.data.map(entry => {
             const normalized = entry.replace(/  +/g, ' ').split(' ')
              
             return {
