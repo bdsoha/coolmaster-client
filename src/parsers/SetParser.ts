@@ -1,26 +1,26 @@
 import { Response } from "../types"
 
 export interface SetEntry {
-    serialNumber?: string
-    version?: string
-    buildDate?: Date
-    application?: string
-    usbVCOMPort?: boolean
-    baudRate?: number
-    echo?: boolean
-    verbose?: boolean
-    vaMode?: number
-    port?: number
-    prompt?: boolean
-    degrees?: 'C' | 'F'
-    melody?: string
-    filter?: 0 | 1 | '-'
-    hvacLines?: number
-    maxIndoors?: number
-    proSize?: number
-    rstOnAssert?: boolean
-    foreachBreak?: string
-    mmiLock?: boolean
+    serialNumber: string
+    version: string
+    buildDate: Date
+    application: string
+    usbVCOMPort: boolean
+    baudRate: number
+    echo: boolean
+    verbose: boolean
+    vaMode: number
+    port: number
+    prompt: boolean
+    degrees: 'C' | 'F'
+    melody: string
+    filter: 0 | 1 | '-'
+    hvacLines: number
+    maxIndoors: number
+    proSize: number
+    rstOnAssert: boolean
+    foreachBreak: string
+    mmiLock: boolean
 }
 
 function booleanFromString(raw: string) {
@@ -51,7 +51,7 @@ export class SetParser {
         'MMI lock': ['mmiLock', booleanFromString],
     } as Record<string, string | [string, (raw : string) => any]>
 
-    public static parse(response: Response): SetEntry {
+    public static parse(response: Response): Partial<SetEntry> {
         const entries = response.data
             .map((entry: string) => {
                 const normalized = entry.split(/:(.*)/s).map(pair => pair.trim())
