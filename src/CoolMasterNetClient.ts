@@ -25,12 +25,12 @@ export class CoolMasterNetClient {
         return this.client.defaults.baseURL
     }
 
-    public async ls() {
-        return await this.call('ls', LSParser)
+    public async ls(uid?: string) {
+        return await this.call('ls', LSParser, uid)
     }
 
-    public async ls2() {
-        return await this.call('ls2', LSParser)
+    public async ls2(uid?: string) {
+        return await this.call('ls2', LSParser, uid)
     }
 
     public async props() {

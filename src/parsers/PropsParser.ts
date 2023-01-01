@@ -1,4 +1,5 @@
 import { Temperature, Speed, Mode, Parsable, Response } from '../types'
+import { BaseParser } from './BaseParser'
 
 export interface PropsEntry {
     uid: string
@@ -12,7 +13,7 @@ export interface PropsEntry {
     lock: boolean
 }
 
-export class PropsParser {
+export class PropsParser extends BaseParser {
     protected static fromLetters(cell: string, type: Parsable): any[] {
         return cell.split(' ').filter(Boolean).map(letter => type.parse(letter))
     }
@@ -35,7 +36,7 @@ export class PropsParser {
 
         // @ts-ignore
         return data.map(entry => {
-            const normalized = entry.replace(/  +/g, ' ').split('|').map(cell => cell.trim())
+            const normalized = this.normalizeRow(entry, '|')
             
             return {
                 uid: normalized[0],

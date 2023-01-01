@@ -1,4 +1,5 @@
 import { PowerStatus, Temperature, Speed, Mode, Filter, FailureStatus, Response } from '../types'
+import { BaseParser } from './BaseParser'
 
 export interface LSEntry {
     uid: string
@@ -12,10 +13,10 @@ export interface LSEntry {
     demand: number
 }
 
-export class LSParser {
+export class LSParser extends BaseParser {
     public static parse(response: Response): LSEntry[] {
         return response.data.map(entry => {
-            const normalized = entry.replace(/  +/g, ' ').split(' ')
+            const normalized = this.normalizeRow(entry)
              
             return {
                 uid: normalized[0],

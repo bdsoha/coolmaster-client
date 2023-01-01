@@ -31,7 +31,11 @@ describe('CoolMasterNetClient', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls' })
     })
     
-    it.todo('[ls] with unit-id')
+    it('[ls] with unit-id', async () => {
+        await call('ls', () => client.ls('L7.001')).toStrictEqual(response.ls)
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'ls&L7_001' })
+    })
     
     it('[ls2] without unit-id', async () => { 
         await call('ls2', () => client.ls2()).toStrictEqual(response.ls2)
@@ -39,8 +43,12 @@ describe('CoolMasterNetClient', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'ls2' })
     })
     
-    it.todo('[ls2] with unit-id')
-    
+    it('[ls2] with unit-id', async () => {
+        await call('ls2', () => client.ls2('L7.001')).toStrictEqual(response.ls2)
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'ls2&L7_001' })
+    })    
+
     it('[props] get prop values', async () => { 
         await call('props', () => client.props()).toStrictEqual(response.props)
         
@@ -90,6 +98,8 @@ describe('CoolMasterNetClient', () => {
         
         expect(mock.history.get[0].params).toStrictEqual({ command: 'set' })
     })
+    
+    it.todo('[set] get partial set values')
     
     it.todo('[set] set set values')
     
