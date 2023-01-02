@@ -2,9 +2,10 @@ import { AxiosInstance } from 'axios'
 import { LSParser } from './parsers/LSParser'
 import { PropsParser } from './parsers/PropsParser'
 import { GenericParser } from './parsers/GenericParser'
-import { Mode, Parsable, Temperature } from './types'
+import { Mode, Parsable, Speed, Temperature } from './types'
 import { CoolMasterNetConnection, ConnectionConfigs } from './CoolMasterNetConnection'
 import { SetParser } from './parsers/SetParser'
+import { Swing } from './types/Swing'
 
 
 export class CoolMasterNetClient {
@@ -60,6 +61,10 @@ export class CoolMasterNetClient {
     public async mode(mode: Mode, uid?: string) {
         return await this.call(mode, GenericParser, [uid])
     }
+
+    public async resetFilter(uid?: string) {
+        return await this.call('filt', GenericParser, [uid])
+    }
     
     public async temperature(temperature: number|string|Temperature, uid? :string) {
         if (temperature instanceof Temperature) {
@@ -67,6 +72,14 @@ export class CoolMasterNetClient {
         }
 
         return await this.call('temp', GenericParser, [uid, String(temperature)])
+    }
+
+    public async speed(speed: Speed, uid? :string) {
+        return await this.call('speed', GenericParser, [uid, speed[0]])
+    }
+
+    public async swing(swing: Swing, uid? :string) {
+        return await this.call('swing', GenericParser, [uid, swing])
     }
 
     public static connect(configs: ConnectionConfigs = {}) {

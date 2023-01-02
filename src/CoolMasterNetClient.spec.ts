@@ -2,7 +2,8 @@ import { CoolMasterNetClient } from './CoolMasterNetClient'
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { json, response } from './__stubs__'
-import { Mode, Temperature } from './types'
+import { Mode, Speed, Temperature } from './types'
+import { Swing } from './types/Swing'
 
 
 describe('CoolMasterNetClient', () => {
@@ -142,10 +143,67 @@ describe('CoolMasterNetClient', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'temp&L7_001&-1' })
     })
 
+    it('[speed] without unit-id', async () => { 
+        await call('generic', () => client.speed(Speed.VERY_LOW)).toBeTruthy()
+        await call('generic', () => client.speed(Speed.LOW)).toBeTruthy()
+        await call('generic', () => client.speed(Speed.MEDIUM)).toBeTruthy()
+        await call('generic', () => client.speed(Speed.HIGH)).toBeTruthy()
+        await call('generic', () => client.speed(Speed.TOP)).toBeTruthy()
+        await call('generic', () => client.speed(Speed.AUTO)).toBeTruthy()
+        
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'speed&v' })
+        expect(mock.history.get[1].params).toStrictEqual({ command: 'speed&l' })
+        expect(mock.history.get[2].params).toStrictEqual({ command: 'speed&m' })
+        expect(mock.history.get[3].params).toStrictEqual({ command: 'speed&h' })
+        expect(mock.history.get[4].params).toStrictEqual({ command: 'speed&t' })
+        expect(mock.history.get[5].params).toStrictEqual({ command: 'speed&a' })
+        
+    })
+    
+    it('[speed] with unit-id', async () => {
+        await call('generic', () => client.speed(Speed.HIGH, 'L7.001')).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'speed&L7_001&h' })
+    })
+
+    it('[swing] without unit-id', async () => { 
+        await call('generic', () => client.swing(Swing.HORIZONTAL)).toBeTruthy()
+        await call('generic', () => client.swing(Swing.VERTICAL)).toBeTruthy()
+        await call('generic', () => client.swing(Swing.AUTO)).toBeTruthy()
+        await call('generic', () => client.swing(Swing.DEGREE_30)).toBeTruthy()
+        await call('generic', () => client.swing(Swing.DEGREE_45)).toBeTruthy()
+        await call('generic', () => client.swing(Swing.DEGREE_60)).toBeTruthy()
+        await call('generic', () => client.swing(Swing.STOP)).toBeTruthy()
+        
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'swing&h' })
+        expect(mock.history.get[1].params).toStrictEqual({ command: 'swing&v' })
+        expect(mock.history.get[2].params).toStrictEqual({ command: 'swing&a' })
+        expect(mock.history.get[3].params).toStrictEqual({ command: 'swing&3' })
+        expect(mock.history.get[4].params).toStrictEqual({ command: 'swing&4' })
+        expect(mock.history.get[5].params).toStrictEqual({ command: 'swing&6' })
+        expect(mock.history.get[6].params).toStrictEqual({ command: 'swing&x' })
+        
+    })
+    
+    it('[swing] with unit-id', async () => {
+        await call('generic', () => client.swing(Swing.STOP, 'L7.001')).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'swing&L7_001&x' })
+    })
+
+    it('[resetFilter] without unit-id', async () => { 
+        await call('generic', () => client.resetFilter()).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'filt' })
+    })
+    
+    it('[resetFilter] with unit-id', async () => {
+        await call('generic', () => client.resetFilter('L7.001')).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'filt&L7_001' })
+    })
     
     describe('info', () => { })
-    describe('temp', () => { })
-    describe('fspeed', () => { })
-    describe('swing', () => { })
-    describe('filt', () => { })
 })
