@@ -2,6 +2,7 @@ import { CoolMasterNetClient } from './CoolMasterNetClient'
 import axios, { AxiosInstance } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { json, response } from './__stubs__'
+import { Mode, Temperature } from './types'
 
 
 describe('CoolMasterNetClient', () => {
@@ -102,15 +103,48 @@ describe('CoolMasterNetClient', () => {
     it.todo('[set] get partial set values')
     
     it.todo('[set] set set values')
+
+    it('[mode] without unit-id', async () => { 
+        await call('generic', () => client.mode(Mode.COOL)).toBeTruthy()
+        await call('generic', () => client.mode(Mode.HEAT)).toBeTruthy()
+        await call('generic', () => client.mode(Mode.FAN)).toBeTruthy()
+        await call('generic', () => client.mode(Mode.DRY)).toBeTruthy()
+        await call('generic', () => client.mode(Mode.AUTO)).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'cool' })
+        expect(mock.history.get[1].params).toStrictEqual({ command: 'heat' })
+        expect(mock.history.get[2].params).toStrictEqual({ command: 'fan' })
+        expect(mock.history.get[3].params).toStrictEqual({ command: 'dry' })
+        expect(mock.history.get[4].params).toStrictEqual({ command: 'auto' })
+    })
+    
+    it('[mode] with unit-id', async () => {
+        await call('generic', () => client.mode(Mode.COOL, 'L7.001')).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'cool&L7_001' })
+    })
+
+    it('[temperature] without unit-id', async () => { 
+        await call('generic', () => client.temperature(22)).toBeTruthy()
+        await call('generic', () => client.temperature(-1)).toBeTruthy()
+        await call('generic', () => client.temperature('+3')).toBeTruthy()
+        await call('generic', () => client.temperature(new Temperature(25))).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'temp&22' })
+        expect(mock.history.get[1].params).toStrictEqual({ command: 'temp&-1' })
+        expect(mock.history.get[2].params).toStrictEqual({ command: 'temp&+3' })
+        expect(mock.history.get[3].params).toStrictEqual({ command: 'temp&25' })
+    })
+    
+    it('[temperature] with unit-id', async () => {
+        await call('generic', () => client.temperature(-1, 'L7.001')).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'temp&L7_001&-1' })
+    })
+
     
     describe('info', () => { })
-    describe('cool', () => { })
-    describe('heat', () => { })
-    describe('fan', () => { })
-    describe('dry', () => { })
-    describe('auto', () => { })
     describe('temp', () => { })
-    describe('feed', () => { })
     describe('fspeed', () => { })
     describe('swing', () => { })
     describe('filt', () => { })
