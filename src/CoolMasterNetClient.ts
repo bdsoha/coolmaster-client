@@ -2,11 +2,10 @@ import { AxiosInstance } from 'axios'
 import { LSParser } from './parsers/LSParser'
 import { PropsParser } from './parsers/PropsParser'
 import { GenericParser } from './parsers/GenericParser'
-import { Mode, Parsable, Speed, Temperature } from './types'
+import { Mode, Parsable, Speed, Swing, Temperature } from './types'
 import { CoolMasterNetConnection, ConnectionConfigs } from './CoolMasterNetConnection'
 import { SetParser } from './parsers/SetParser'
-import { Swing } from './types/Swing'
-import { SetConfig } from './types/SetConfig'
+
 
 
 export class CoolMasterNetClient {
@@ -14,7 +13,7 @@ export class CoolMasterNetClient {
 
     protected async call(command: string, parser: Parsable, args: any[] = []) {
         const query = [command, ...args]
-            .filter(Boolean)
+            .filter(v => v !== undefined)
             .map(String)
             .map(param => param.replace(/\./g, '_'))
             .join('&')
@@ -40,10 +39,6 @@ export class CoolMasterNetClient {
         return await this.call('props', PropsParser)
     }
 
-    public async set(key?: SetConfig, ...values: any[]) {
-        return await this.call('set', SetParser, [key, ...values])
-    }
-
     public async on(uid?: string) {
         return await this.call('on', GenericParser, [uid])
     }
@@ -66,6 +61,22 @@ export class CoolMasterNetClient {
 
     public async resetFilter(uid?: string) {
         return await this.call('filt', GenericParser, [uid])
+    }
+
+    public async settings() {
+        return await this.call('set', SetParser)
+    }
+
+    public async resetSettings() {
+        return await this.call('set', GenericParser, ['defaults'])
+    }
+
+    public async setFilterVisibility(value: boolean) {
+        return await this.call('set', GenericParser, ['filter_visi', value ? 1 : 0])
+    }
+
+    public async setMelody(value: string) {
+        return await this.call('set', GenericParser, ['melody', value])
     }
 
     public async temperature(temperature: number | string | Temperature, uid?: string) {

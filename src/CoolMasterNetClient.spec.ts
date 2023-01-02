@@ -4,7 +4,6 @@ import MockAdapter from 'axios-mock-adapter'
 import { json, response } from './__stubs__'
 import { Mode, Speed, Temperature } from './types'
 import { Swing } from './types/Swing'
-import { SetConfig } from './types/SetConfig'
 
 
 describe('CoolMasterNetClient', () => {
@@ -96,19 +95,13 @@ describe('CoolMasterNetClient', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'off' })
     })
     
-    it('[set] get set values', async () => { 
-        await call('set', () => client.set()).toStrictEqual(response.set)
+    it('[settings] get settings values', async () => { 
+        await call('set', () => client.settings()).toStrictEqual(response.set)
         
         expect(mock.history.get[0].params).toStrictEqual({ command: 'set' })
     })
     
-    it.todo('[set] get partial set values')
-    
-    it('[set] set with values', async () => {
-        await call('set', () => client.set(SetConfig.PORT, 1111)).toStrictEqual(response.set)
-        
-        expect(mock.history.get[0].params).toStrictEqual({ command: 'set&aserver_port&1111' })
-    })
+    it.todo('[settings] get partial settings values')
 
     it('[mode] without unit-id', async () => { 
         await call('generic', () => client.mode(Mode.COOL)).toBeTruthy()
@@ -208,6 +201,27 @@ describe('CoolMasterNetClient', () => {
         await call('generic', () => client.resetFilter('L7.001')).toBeTruthy()
         
         expect(mock.history.get[0].params).toStrictEqual({ command: 'filt&L7_001' })
+    })
+
+    
+    it('[resetSettings] reset default values', async () => {
+        await call('generic', () => client.resetSettings()).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'set&defaults' })
+    })
+    
+    it('[setFilterVisibility] set filter visibility', async () => {
+        await call('generic', () => client.setFilterVisibility(true)).toBeTruthy()
+        await call('generic', () => client.setFilterVisibility(false)).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'set&filter_visi&1' }) // @TODO: test if this is seperated by a `_` or `&`
+        expect(mock.history.get[1].params).toStrictEqual({ command: 'set&filter_visi&0' }) // @TODO: test if this is seperated by a `_` or `&`
+    })
+
+    it('[setMelody] set filter visibility', async () => {
+        await call('generic', () => client.setMelody('chime')).toBeTruthy()
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'set&melody&chime' })
     })
     
     it.todo('info')
