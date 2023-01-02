@@ -6,14 +6,16 @@ import { Mode, Parsable, Speed, Temperature } from './types'
 import { CoolMasterNetConnection, ConnectionConfigs } from './CoolMasterNetConnection'
 import { SetParser } from './parsers/SetParser'
 import { Swing } from './types/Swing'
+import { SetConfig } from './types/SetConfig'
 
 
 export class CoolMasterNetClient {
     constructor(protected readonly client: AxiosInstance) { }
 
-    protected async call(command: string, parser: Parsable, args: string[] = []) {
+    protected async call(command: string, parser: Parsable, args: any[] = []) {
         const query = [command, ...args]
             .filter(Boolean)
+            .map(String)
             .map(param => param.replace(/\./g, '_'))
             .join('&')
 
@@ -38,8 +40,8 @@ export class CoolMasterNetClient {
         return await this.call('props', PropsParser)
     }
 
-    public async set() {
-        return await this.call('set', SetParser)
+    public async set(key?: SetConfig, ...values: any[]) {
+        return await this.call('set', SetParser, [key, ...values])
     }
 
     public async on(uid?: string) {
@@ -53,11 +55,11 @@ export class CoolMasterNetClient {
     public async off(uid?: string) {
         return await this.call('off', GenericParser, [uid])
     }
-    
+
     public async allOff() {
         return this.off()
     }
-    
+
     public async mode(mode: Mode, uid?: string) {
         return await this.call(mode, GenericParser, [uid])
     }
@@ -65,20 +67,20 @@ export class CoolMasterNetClient {
     public async resetFilter(uid?: string) {
         return await this.call('filt', GenericParser, [uid])
     }
-    
-    public async temperature(temperature: number|string|Temperature, uid? :string) {
+
+    public async temperature(temperature: number | string | Temperature, uid?: string) {
         if (temperature instanceof Temperature) {
             temperature = temperature.degrees
         }
 
-        return await this.call('temp', GenericParser, [uid, String(temperature)])
+        return await this.call('temp', GenericParser, [uid, temperature])
     }
 
-    public async speed(speed: Speed, uid? :string) {
+    public async speed(speed: Speed, uid?: string) {
         return await this.call('speed', GenericParser, [uid, speed[0]])
     }
 
-    public async swing(swing: Swing, uid? :string) {
+    public async swing(swing: Swing, uid?: string) {
         return await this.call('swing', GenericParser, [uid, swing])
     }
 

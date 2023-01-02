@@ -4,6 +4,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { json, response } from './__stubs__'
 import { Mode, Speed, Temperature } from './types'
 import { Swing } from './types/Swing'
+import { SetConfig } from './types/SetConfig'
 
 
 describe('CoolMasterNetClient', () => {
@@ -103,7 +104,11 @@ describe('CoolMasterNetClient', () => {
     
     it.todo('[set] get partial set values')
     
-    it.todo('[set] set set values')
+    it('[set] set with values', async () => {
+        await call('set', () => client.set(SetConfig.PORT, 1111)).toStrictEqual(response.set)
+        
+        expect(mock.history.get[0].params).toStrictEqual({ command: 'set&aserver_port&1111' })
+    })
 
     it('[mode] without unit-id', async () => { 
         await call('generic', () => client.mode(Mode.COOL)).toBeTruthy()
@@ -205,5 +210,7 @@ describe('CoolMasterNetClient', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: 'filt&L7_001' })
     })
     
-    describe('info', () => { })
+    it.todo('info')
+    it.todo('lock')
+    it.todo('test "OK, Boot Required!" response (>set filter visi 1)')
 })
