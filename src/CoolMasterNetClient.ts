@@ -2,10 +2,9 @@ import { AxiosInstance } from 'axios'
 import { LSParser } from './parsers/LSParser'
 import { PropsParser } from './parsers/PropsParser'
 import { GenericParser } from './parsers/GenericParser'
-import { Mode, Parsable, Speed, Swing, Temperature } from './types'
+import { Mode, Parsable, Response, Speed, Swing, Temperature } from './types'
 import { CoolMasterNetConnection, ConnectionConfigs } from './CoolMasterNetConnection'
 import { SetParser } from './parsers/SetParser'
-
 
 
 export class CoolMasterNetClient {
@@ -13,12 +12,14 @@ export class CoolMasterNetClient {
 
     protected async call(command: string, parser: Parsable, args: any[] = []) {
         const query = [command, ...args]
-            .filter(v => v !== undefined)
+            .filter(param => param !== undefined)
             .map(String)
-            .map(param => param.replace(/\./g, '_'))
-            .join('&')
 
-        const { data } = await this.client.get('', { params: { command: query } })
+        const { data } = await this.client.get<any, any, Response>('', { params: { command: query } })
+
+        // if (data.rc !== 'OK') {
+        //     throw Error(data.rc)
+        // }
 
         return parser.parse(data)
     }
@@ -72,7 +73,7 @@ export class CoolMasterNetClient {
     }
 
     public async setFilterVisibility(value: boolean) {
-        return await this.call('set', GenericParser, ['filter_visi', value ? 1 : 0])
+        return await this.call('set', GenericParser, ['filter visi', value ? 1 : 0])
     }
 
     public async setMelody(value: string) {

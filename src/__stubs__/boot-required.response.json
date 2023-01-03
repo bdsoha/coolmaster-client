@@ -1,0 +1,5 @@
+{ 
+    "command": "set filter visi 1", 
+    "data": [], 
+    "rc": "OK, Boot Required!"
+}

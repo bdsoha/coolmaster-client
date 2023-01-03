@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+import { ParamsSerializer } from './utilities'
 
 
 export type ConnectionConfigs = {
@@ -29,7 +30,8 @@ export class CoolMasterNetConnection {
             baseURL: `${protocol}://${host}:${port}/v1.0/device/${device}/raw`,
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            paramsSerializer: new ParamsSerializer()
         })
     }
 }
