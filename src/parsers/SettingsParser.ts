@@ -1,4 +1,5 @@
 import { Response } from "../types"
+import { BaseParser } from "./BaseParser"
 
 export interface SetEntry {
     serialNumber: string
@@ -23,11 +24,7 @@ export interface SetEntry {
     mmiLock: boolean
 }
 
-function booleanFromString(raw: string) {
-    return Boolean(parseInt(raw))
-}
-
-export class SetParser {
+export class SettingsParser extends BaseParser {
     protected static readonly lookup = {
         'S/N': 'serialNumber',
         'version': 'version',
@@ -35,20 +32,20 @@ export class SetParser {
         'application': 'application',
         'USB VCOM Port': ['usbVCOMPort', parseInt],
         'baud rate': ['baudRate', parseInt],
-        'echo': ['echo', booleanFromString],
-        'verbose': ['verbose', booleanFromString],
+        'echo': ['echo', this.booleanFromString],
+        'verbose': ['verbose', this.booleanFromString],
         'VA mode': ['vaMode', parseInt],
         'aserver port': ['port', parseInt],
-        'aserver prompt': ['prompt', booleanFromString],
+        'aserver prompt': ['prompt', this.booleanFromString],
         'deg C/F': 'degrees',
         'melody': 'melody',
         'filter': 'filter',
         'HVAC lines': ['hvacLines', parseInt],
         'max indoors': ['maxIndoors', parseInt],
         'PRO size': ['proSize', parseInt],
-        'rst on assert': ['resetOnAssert', booleanFromString],
+        'rst on assert': ['resetOnAssert', this.booleanFromString],
         'foreach break': 'foreachBreak',
-        'MMI lock': ['mmiLock', booleanFromString],
+        'MMI lock': ['mmiLock', this.booleanFromString],
     } as Record<string, string | [string, (raw : string) => any]>
 
     public static parse(response: Response): Partial<SetEntry> {
