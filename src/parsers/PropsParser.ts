@@ -1,35 +1,38 @@
-import { Temperature, Speed, Mode, Parsable, Response } from '../types'
 import { BaseParser } from './BaseParser'
+import * as Types     from '../types'
+
+
+type TemperatureRange = [Types.Temperature | null, Types.Temperature | null]
 
 export interface PropsEntry {
     uid: string
     name: string
     visible: boolean
-    modes: Mode[]
-    speeds: Speed[]
+    modes: Types.Mode[]
+    speeds: Types.Speed[]
     time: null
-    coolRange: [Temperature | null, Temperature | null]
-    heatRange: [Temperature | null, Temperature | null]
+    coolRange: TemperatureRange
+    heatRange: TemperatureRange
     lock: boolean
 }
 
 export class PropsParser extends BaseParser {
-    protected static fromLetters(cell: string, type: Parsable): any[] {
+    protected static fromLetters<T>(cell: string, type: Types.Parsable): T[] {
         return cell.split(' ').filter(Boolean).map(letter => type.parse(letter))
     }
 
-    protected static fromRange(cell: string, type: Parsable): [Temperature | null, Temperature | null] {
+    protected static fromRange(cell: string, type: Types.Parsable):TemperatureRange {
         // @ts-ignore
         return cell.split(' ').map(letter => {
             if (letter === '--') {
                 return null
             }
-            
+
             return type.parse(letter)
         })
     }
 
-    public static parse(response: Response): PropsEntry[] {
+    public static parse(response: Types.Response): PropsEntry[] {
         const { data } = response
 
         data.splice(0, 2)
@@ -37,17 +40,17 @@ export class PropsParser extends BaseParser {
         // @ts-ignore
         return data.map(entry => {
             const normalized = this.normalizeRow(entry, '|')
-            
+
             return {
-                uid: normalized[0],
-                name: normalized[1],
-                visible: !!parseInt(normalized[2]),
-                modes: this.fromLetters(normalized[3], Mode),
-                speeds: this.fromLetters(normalized[4], Speed),
-                time: this.fromRange(normalized[5], null),
-                coolRange: this.fromRange(normalized[6], Temperature),
-                heatRange: this.fromRange(normalized[7], Temperature),
-                lock: !!parseInt(normalized[8])
+                uid:       normalized[0],
+                name:      normalized[1],
+                visible:   this.booleanFromString(normalized[2]),
+                modes:     this.fromLetters(normalized[3], Types.Mode),
+                speeds:    this.fromLetters(normalized[4], Types.Speed),
+                time:      this.fromRange(normalized[5], null),
+                coolRange: this.fromRange(normalized[6], Types.Temperature),
+                heatRange: this.fromRange(normalized[7], Types.Temperature),
+                lock:      this.booleanFromString(normalized[8])
             }
         })
     }

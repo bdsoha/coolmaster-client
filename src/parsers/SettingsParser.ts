@@ -1,7 +1,8 @@
-import { Response } from "../types"
-import { BaseParser } from "./BaseParser"
+import { Response }         from '../types'
+import { BaseParser }       from './BaseParser'
+import { ParsableCallback } from '../types/Parsable'
 
-export interface SetEntry {
+export interface SettingsEntry {
     serialNumber: string
     version: string
     buildDate: Date
@@ -26,29 +27,29 @@ export interface SetEntry {
 
 export class SettingsParser extends BaseParser {
     protected static readonly lookup = {
-        'S/N': 'serialNumber',
-        'version': 'version',
-        'build date': ['buildDate', value => new Date(value)],
-        'application': 'application',
-        'USB VCOM Port': ['usbVCOMPort', parseInt],
-        'baud rate': ['baudRate', parseInt],
-        'echo': ['echo', this.booleanFromString],
-        'verbose': ['verbose', this.booleanFromString],
-        'VA mode': ['vaMode', parseInt],
-        'aserver port': ['port', parseInt],
+        'S/N':            'serialNumber',
+        'version':        'version',
+        'build date':     ['buildDate', (value: string) => new Date(value)],
+        'application':    'application',
+        'USB VCOM Port':  ['usbVCOMPort', parseInt],
+        'baud rate':      ['baudRate', parseInt],
+        'echo':           ['echo', this.booleanFromString],
+        'verbose':        ['verbose', this.booleanFromString],
+        'VA mode':        ['vaMode', parseInt],
+        'aserver port':   ['port', parseInt],
         'aserver prompt': ['prompt', this.booleanFromString],
-        'deg C/F': 'degrees',
-        'melody': 'melody',
-        'filter': 'filter',
-        'HVAC lines': ['hvacLines', parseInt],
-        'max indoors': ['maxIndoors', parseInt],
-        'PRO size': ['proSize', parseInt],
-        'rst on assert': ['resetOnAssert', this.booleanFromString],
-        'foreach break': 'foreachBreak',
-        'MMI lock': ['mmiLock', this.booleanFromString],
-    } as Record<string, string | [string, (raw : string) => any]>
+        'deg C/F':        'degrees',
+        'melody':         'melody',
+        'filter':         'filter',
+        'HVAC lines':     ['hvacLines', parseInt],
+        'max indoors':    ['maxIndoors', parseInt],
+        'PRO size':       ['proSize', parseInt],
+        'rst on assert':  ['resetOnAssert', this.booleanFromString],
+        'foreach break':  'foreachBreak',
+        'MMI lock':       ['mmiLock', this.booleanFromString],
+    } as Record<string, string | [string, ParsableCallback]>
 
-    public static parse(response: Response): Partial<SetEntry> {
+    public static parse(response: Response): Partial<SettingsEntry> {
         const entries = response.data
             .map((entry: string) => {
                 const normalized = entry.split(/:(.*)/s).map(pair => pair.trim())

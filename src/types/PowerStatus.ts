@@ -1,11 +1,12 @@
-export enum PowerStatus {
-    ON = 'on',
-    OFF = 'off'
-}
+import { EnumParser } from '../utilities'
 
-export namespace PowerStatus {
-    export function parse(status: string): PowerStatus {
-        // @ts-ignore
-        return PowerStatus[status.toUpperCase()];
+
+export const PowerStatus = {
+    ON:  'on',
+    OFF: 'off',
+    parse(raw: string) {
+        return EnumParser.parse.call(this, raw)
     }
-}
+} as const
+
+export type PowerStatus = typeof PowerStatus[keyof typeof PowerStatus]

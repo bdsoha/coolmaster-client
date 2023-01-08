@@ -1,8 +1,8 @@
 export abstract class BaseParser {
     protected static normalizeRow(
         entry: string,
-        delimiter: string = ' ',
-        trim: boolean = true
+        delimiter = ' ',
+        trim = true
     ) {
         const data = entry.replace(/  +/g, ' ').split(delimiter)
 

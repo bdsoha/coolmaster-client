@@ -1,18 +1,17 @@
-export enum Filter {
-    REQUIRES_CLEANING = '#',
-    CLEAN = '-'
-}
+export const Filter = {
+    REQUIRES_CLEANING: '#',
+    CLEAN:             '-',
 
-export namespace Filter {
-    export function parse(filter: string): Filter {
+    parse(filter: string) {
         if (filter === '#') {
-            return Filter.REQUIRES_CLEANING
+            return this.REQUIRES_CLEANING
         }
 
         if (filter === '-') {
-            return Filter.CLEAN
+            return this.CLEAN
         }
-
-        return undefined
     }
-}
+
+} as const
+
+export type Filter = typeof Filter[keyof typeof Filter]

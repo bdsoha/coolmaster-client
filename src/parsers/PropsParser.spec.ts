@@ -1,5 +1,6 @@
+import { PropsParser }    from './PropsParser'
 import { json, response } from '../__stubs__'
-import { PropsParser } from './PropsParser'
+
 
 describe('PropsParser', () => {
     it('[parse] parses a JSON response', () => {

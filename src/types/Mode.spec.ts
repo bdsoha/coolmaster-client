@@ -1,11 +1,12 @@
 import { Mode } from './Mode'
 
+
 describe('Mode', () => {
     it('[parse] receives upper or lower case', () => {
         expect(Mode.parse('auto')).toBe(Mode.AUTO)
         expect(Mode.parse('Auto')).toBe(Mode.AUTO)
         expect(Mode.parse('AUTO')).toBe(Mode.AUTO)
-        
+
         expect(Mode.parse('cool')).toBe(Mode.COOL)
         expect(Mode.parse('Cool')).toBe(Mode.COOL)
         expect(Mode.parse('COOL')).toBe(Mode.COOL)

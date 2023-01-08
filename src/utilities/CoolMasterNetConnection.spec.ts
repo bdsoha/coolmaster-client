@@ -24,8 +24,8 @@ describe('CoolMasterNetConnection', () => {
 
     it('[create] uses paramaters when available', () => {
         const client = CoolMasterNetConnection.create({
-            host: '192.168.1.111',
-            port: 1234,
+            host:   '192.168.1.111',
+            port:   1234,
             secure: true,
             device: '443B960055F0',
         })
@@ -35,7 +35,7 @@ describe('CoolMasterNetConnection', () => {
 
     it('[create] uses a default port and is insecure', () => {
         const client = CoolMasterNetConnection.create({
-            host: '192.168.1.111',
+            host:   '192.168.1.111',
             device: '443B960055F0',
         })
 

@@ -1,5 +1,6 @@
 import { json, response } from '../__stubs__'
-import { LSParser } from './LSParser'
+import { LSParser }       from './LSParser'
+
 
 describe('LSParser', () => {
     it('[parse] parses a JSON response', () => {

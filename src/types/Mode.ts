@@ -1,14 +1,15 @@
 import { EnumParser } from '../utilities'
 
 
-export enum Mode {
-    COOL = 'cool',
-    HEAT = 'heat',
-    FAN = 'fan',
-    DRY = 'dry',
-    AUTO = 'auto'
-}
+export const Mode = {
+    COOL: 'cool',
+    HEAT: 'heat',
+    FAN:  'fan',
+    DRY:  'dry',
+    AUTO: 'auto',
+    parse(raw: string) {
+        return EnumParser.parse.call(this, raw)
+    }
+} as const
 
-export namespace Mode {
-    export const parse = EnumParser.parse.bind(Mode)
-}
+export type Mode = typeof Mode[keyof typeof Mode]

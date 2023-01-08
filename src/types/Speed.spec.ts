@@ -1,11 +1,12 @@
 import { Speed } from './Speed'
 
+
 describe('Speed', () => {
     it('[parse] receives upper or lower case', () => {
         expect(Speed.parse('auto')).toBe(Speed.AUTO)
         expect(Speed.parse('Auto')).toBe(Speed.AUTO)
         expect(Speed.parse('AUTO')).toBe(Speed.AUTO)
-        
+
         expect(Speed.parse('vlow')).toBe(Speed.VERY_LOW)
         expect(Speed.parse('Vlow')).toBe(Speed.VERY_LOW)
         expect(Speed.parse('VLOW')).toBe(Speed.VERY_LOW)

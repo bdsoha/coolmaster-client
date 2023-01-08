@@ -1,14 +1,16 @@
-import { EnumParser } from "../utilities";
+import { EnumParser } from '../utilities'
 
-export enum Speed {
-    VERY_LOW = 'vlow',
-    LOW = 'low',
-    MEDIUM = 'med',
-    HIGH = 'high',
-    TOP = 'top',
-    AUTO = 'auto',
-}
 
-export namespace Speed {
-    export const parse = EnumParser.parse.bind(Speed)
-}
+export const Speed = {
+    VERY_LOW: 'vlow',
+    LOW:      'low',
+    MEDIUM:   'med',
+    HIGH:     'high',
+    TOP:      'top',
+    AUTO:     'auto',
+    parse(raw: string) {
+        return EnumParser.parse.call(this, raw)
+    }
+} as const
+
+export type Speed = typeof Speed[keyof typeof Speed]

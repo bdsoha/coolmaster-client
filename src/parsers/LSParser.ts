@@ -1,33 +1,33 @@
-import { PowerStatus, Temperature, Speed, Mode, Filter, FailureStatus, Response } from '../types'
 import { BaseParser } from './BaseParser'
+import * as Types     from '../types'
 
 export interface LSEntry {
     uid: string
-    power: PowerStatus
-    targetTemp: Temperature
-    currentTemp: Temperature
-    speed: Speed
-    mode: Mode
-    failure: FailureStatus
-    filter: Filter
+    power: Types.PowerStatus
+    targetTemp: Types.Temperature
+    currentTemp: Types.Temperature
+    speed: Types.Speed
+    mode: Types.Mode
+    failure: Types.FailureStatus
+    filter: Types.Filter
     demand: number
 }
 
 export class LSParser extends BaseParser {
-    public static parse(response: Response): LSEntry[] {
+    public static parse(response: Types.Response): LSEntry[] {
         return response.data.map(entry => {
             const normalized = this.normalizeRow(entry)
-             
+
             return {
-                uid: normalized[0],
-                power: PowerStatus.parse(normalized[1]),
-                targetTemp: Temperature.parse(normalized[2]),
-                currentTemp: Temperature.parse(normalized[3]),
-                speed: Speed.parse(normalized[4]),
-                mode: Mode.parse(normalized[5]),
-                failure: FailureStatus.parse(normalized[6]),
-                filter: Filter.parse(normalized[7]),
-                demand: parseInt(normalized[8])
+                uid:         normalized[0],
+                power:       Types.PowerStatus.parse(normalized[1]),
+                targetTemp:  Types.Temperature.parse(normalized[2]),
+                currentTemp: Types.Temperature.parse(normalized[3]),
+                speed:       Types.Speed.parse(normalized[4]),
+                mode:        Types.Mode.parse(normalized[5]),
+                failure:     Types.FailureStatus.parse(normalized[6]),
+                filter:      Types.Filter.parse(normalized[7]),
+                demand:      parseInt(normalized[8])
             }
         })
     }
