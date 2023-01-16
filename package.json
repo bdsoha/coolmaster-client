@@ -23,7 +23,9 @@
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "jest"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "axios": "^1.2.1"

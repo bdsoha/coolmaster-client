@@ -1,24 +1,39 @@
-name: Test
+name: 🧪 Test
 
-on:
+on: 
   push:
-    branches: [ "*" ]
+    branches: 
+      - '*'
+      
   pull_request:
-    branches: [ "*" ]
+    types:
+      - opened
+      - synchronize
 
 jobs:
-  build:
+  test:
+    name: 🧪 Test
+
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: yarn install --frozen-lockfile
-    - run: npm run test
+      - name: 📚 Checkout
+        uses: actions/checkout@v3
+
+      - name: 🔵 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
+
+      - name: ⏬ Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: 🧪 Run tests
+        run: npm run test:cov
+
+      - name: 💯 Coverage
+        uses: paambaati/codeclimate-action@v3.2.0
+        if: github.ref == 'refs/heads/develop'
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

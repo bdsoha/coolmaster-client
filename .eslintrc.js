@@ -38,8 +38,8 @@ module.exports = {
         'no-trailing-spaces':                [ERR, { ignoreComments: true }],
         'no-useless-rename':                 ERR,
         'object-curly-newline':              [ERR, {
-            ObjectExpression: { multiline: true },
-            ObjectPattern: { multiline: true },
+            ObjectExpression:  { multiline: true },
+            ObjectPattern:     { multiline: true },
             ImportDeclaration: { multiline: true, minProperties: 4 },
             ExportDeclaration: { multiline: true, minProperties: 4 }
         }],

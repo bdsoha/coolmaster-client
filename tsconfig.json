@@ -5,7 +5,6 @@
       "experimentalDecorators": true,
       "esModuleInterop": true,
       "lib": ["es6"],
-      "types": ["node", "jest"],
       "module": "commonjs",
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": true,
@@ -17,7 +16,8 @@
       "resolveJsonModule": true,
       "sourceMap": true,
       "strictNullChecks": false,
-      "target": "es6"
+      "target": "es6",
+      "types": ["node", "jest"]
   },
   "include": ["src"]
 }
