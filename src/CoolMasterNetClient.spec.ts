@@ -1,14 +1,14 @@
-import MockAdapter                  from 'axios-mock-adapter'
+import axios                        from 'axios'
 import { Swing }                    from './types/Swing'
+import MockAdapter                  from 'axios-mock-adapter'
 import { json, response }           from './__stubs__'
 import { CoolMasterNetClient }      from './CoolMasterNetClient'
-import axios, { AxiosInstance }     from 'axios'
+import { Properties, Settings }     from './commands'
 import { Mode, Speed, Temperature } from './types'
 
 
 describe('CoolMasterNetClient', () => {
     let mock: MockAdapter
-    let instance: AxiosInstance
     let client: CoolMasterNetClient
 
     const call = (key: string, callback: () => any) => { // eslint-disable-line
@@ -18,7 +18,7 @@ describe('CoolMasterNetClient', () => {
     }
 
     beforeAll(() => {
-        instance = axios.create()
+        const instance = axios.create()
         mock = new MockAdapter(instance)
         client = new CoolMasterNetClient(instance)
     })
@@ -51,13 +51,9 @@ describe('CoolMasterNetClient', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: ['ls2', 'L7.001'] })
     })
 
-    it('[props] get prop values', async () => {
-        await call('props', () => client.props()).toStrictEqual(response.props)
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['props'] })
+    it('[properties] get properties values', async () => {
+        expect(client.properties).toBeInstanceOf(Properties)
     })
-
-    it.todo('[props] set prop values')
 
     it('[on] without unit-id', async () => {
         await call('generic', () => client.on()).toBeTruthy()
@@ -96,12 +92,8 @@ describe('CoolMasterNetClient', () => {
     })
 
     it('[settings] get settings values', async () => {
-        await call('set', () => client.settings()).toStrictEqual(response.set)
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['set'] })
+        expect(client.settings).toBeInstanceOf(Settings)
     })
-
-    it.todo('[settings] get partial settings values')
 
     it('[mode] without unit-id', async () => {
         await call('generic', () => client.mode(Mode.COOL)).toBeTruthy()
@@ -149,7 +141,6 @@ describe('CoolMasterNetClient', () => {
         await call('generic', () => client.speed(Speed.TOP)).toBeTruthy()
         await call('generic', () => client.speed(Speed.AUTO)).toBeTruthy()
 
-
         expect(mock.history.get[0].params).toStrictEqual({ command: ['speed', 'v'] })
         expect(mock.history.get[1].params).toStrictEqual({ command: ['speed', 'l'] })
         expect(mock.history.get[2].params).toStrictEqual({ command: ['speed', 'm'] })
@@ -173,7 +164,6 @@ describe('CoolMasterNetClient', () => {
         await call('generic', () => client.swing(Swing.DEGREE_45)).toBeTruthy()
         await call('generic', () => client.swing(Swing.DEGREE_60)).toBeTruthy()
         await call('generic', () => client.swing(Swing.STOP)).toBeTruthy()
-
 
         expect(mock.history.get[0].params).toStrictEqual({ command: ['swing', 'h'] })
         expect(mock.history.get[1].params).toStrictEqual({ command: ['swing', 'v'] })
@@ -201,27 +191,6 @@ describe('CoolMasterNetClient', () => {
         await call('generic', () => client.resetFilter('L7.001')).toBeTruthy()
 
         expect(mock.history.get[0].params).toStrictEqual({ command: ['filt', 'L7.001'] })
-    })
-
-
-    it('[resetSettings] reset default values', async () => {
-        await call('generic', () => client.resetSettings()).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['set', 'defaults'] })
-    })
-
-    it('[setFilterVisibility] set filter visibility', async () => {
-        await call('generic', () => client.setFilterVisibility(true)).toBeTruthy()
-        await call('generic', () => client.setFilterVisibility(false)).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['set', 'filter visi', '1'] })
-        expect(mock.history.get[1].params).toStrictEqual({ command: ['set', 'filter visi', '0'] })
-    })
-
-    it('[setMelody] set filter visibility', async () => {
-        await call('generic', () => client.setMelody('chime')).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['set', 'melody', 'chime'] })
     })
 
     it.todo('info')

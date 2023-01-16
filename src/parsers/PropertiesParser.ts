@@ -16,7 +16,7 @@ export interface PropsEntry {
     lock: boolean
 }
 
-export class PropsParser extends BaseParser {
+export class PropertiesParser extends BaseParser {
     protected static fromLetters<T>(cell: string, type: Types.Parsable): T[] {
         return cell.split(' ').filter(Boolean).map(letter => type.parse(letter))
     }

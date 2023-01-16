@@ -1,32 +1,16 @@
-import { AxiosInstance }                              from 'axios'
 import { CoolMasterNetConnection, ConnectionConfigs } from './utilities/CoolMasterNetConnection'
+import * as Commands                                  from './commands'
 import * as Parsers                                   from './parsers'
 import * as Types                                     from './types'
 
 
-export class CoolMasterNetClient {
-    constructor(protected readonly client: AxiosInstance) { }
-
-    protected async call(
-        command: string,
-        parser: Types.Parsable,
-        args: Array<string|number> = []
-    ) {
-        const query = [command, ...args]
-            .filter(param => param !== undefined)
-            .map(String)
-
-        const { data } = await this.client.get<Types.Response>('', { params: { command: query } })
-
-        // if (data.rc !== 'OK') {
-        //     throw Error(data.rc)
-        // }
-
-        return parser.parse(data)
+export class CoolMasterNetClient extends Commands.BaseCommand {
+    public get properties() {
+        return new Commands.Properties(this.client)
     }
 
-    public get baseURL(): string {
-        return this.client.defaults.baseURL
+    public get settings() {
+        return new Commands.Settings(this.client)
     }
 
     public async ls(uid?: string) {
@@ -35,10 +19,6 @@ export class CoolMasterNetClient {
 
     public async ls2(uid?: string) {
         return await this.call('ls2', Parsers.LSParser, [uid])
-    }
-
-    public async props() {
-        return await this.call('props', Parsers.PropsParser)
     }
 
     public async on(uid?: string) {
@@ -63,22 +43,6 @@ export class CoolMasterNetClient {
 
     public async resetFilter(uid?: string) {
         return await this.call('filt', Parsers.GenericParser, [uid])
-    }
-
-    public async settings() {
-        return await this.call('set', Parsers.SettingsParser)
-    }
-
-    public async resetSettings() {
-        return await this.call('set', Parsers.GenericParser, ['defaults'])
-    }
-
-    public async setFilterVisibility(value: boolean) {
-        return await this.call('set', Parsers.GenericParser, ['filter visi', value ? 1 : 0])
-    }
-
-    public async setMelody(value: string) {
-        return await this.call('set', Parsers.GenericParser, ['melody', value])
     }
 
     public async temperature(temperature: number | string | Types.Temperature, uid?: string) {
