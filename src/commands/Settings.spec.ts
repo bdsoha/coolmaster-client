@@ -46,7 +46,6 @@ describe('Settings', () => {
         expect(mock.history.get[1].params).toStrictEqual({ command: ['set', 'filter visi', '0'] })
     })
 
-
     it('[melody] set filter visibility', async () => {
         await call('generic', () => client.melody('chime')).toBeTruthy()
 

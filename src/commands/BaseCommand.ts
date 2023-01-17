@@ -24,4 +24,8 @@ export abstract class BaseCommand {
 
         return parser.parse(data)
     }
+
+    protected boolToInt(value: boolean) {
+        return value ? 1 : 0
+    }
 }
