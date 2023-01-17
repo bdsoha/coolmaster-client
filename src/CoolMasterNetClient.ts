@@ -22,7 +22,7 @@ export class CoolMasterNetClient extends Commands.BaseCommand {
     }
 
     public on(uid?: string) {
-        return this.call('on', Parsers.GenericParser, [uid])
+        return this.callGeneric('on', [uid])
     }
 
     public allOn() {
@@ -30,7 +30,7 @@ export class CoolMasterNetClient extends Commands.BaseCommand {
     }
 
     public off(uid?: string) {
-        return this.call('off', Parsers.GenericParser, [uid])
+        return this.callGeneric('off', [uid])
     }
 
     public allOff() {
@@ -38,11 +38,11 @@ export class CoolMasterNetClient extends Commands.BaseCommand {
     }
 
     public mode(mode: Types.Mode, uid?: string) {
-        return this.call(mode as string, Parsers.GenericParser, [uid])
+        return this.callGeneric(mode as string, [uid])
     }
 
     public resetFilter(uid?: string) {
-        return this.call('filt', Parsers.GenericParser, [uid])
+        return this.callGeneric('filt', [uid])
     }
 
     public temperature(temperature: number | string | Types.Temperature, uid?: string) {
@@ -50,17 +50,17 @@ export class CoolMasterNetClient extends Commands.BaseCommand {
             temperature = temperature.degrees
         }
 
-        return this.call('temp', Parsers.GenericParser, [uid, temperature])
+        return this.callGeneric('temp', [uid, temperature])
     }
 
     public speed(speed: Types.Speed, uid?: string) {
         const casted = speed as string
 
-        return this.call('speed', Parsers.GenericParser, [uid, casted[0]])
+        return this.callGeneric('speed', [uid, casted[0]])
     }
 
     public swing(swing: Types.Swing, uid?: string) {
-        return this.call('swing', Parsers.GenericParser, [uid, swing])
+        return this.callGeneric('swing', [uid, swing])
     }
 
     public static connect(configs: ConnectionConfigs = {}) {

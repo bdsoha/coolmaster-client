@@ -1,5 +1,5 @@
-import { BaseCommand }                   from './BaseCommand'
-import { GenericParser, SettingsParser } from '../parsers'
+import { BaseCommand }    from './BaseCommand'
+import { SettingsParser } from '../parsers'
 
 
 export class Settings extends BaseCommand {
@@ -8,14 +8,14 @@ export class Settings extends BaseCommand {
     }
 
     public reset() {
-        return this.call('set', GenericParser, ['defaults'])
+        return this.callGeneric('set', ['defaults'])
     }
 
     public filterVisibility(value: boolean) {
-        return this.call('set', GenericParser, ['filter visi', this.boolToInt(value)])
+        return this.callGeneric('set', ['filter visi', this.boolToInt(value)])
     }
 
     public melody(value: string) {
-        return this.call('set', GenericParser, ['melody', value])
+        return this.callGeneric('set', ['melody', value])
     }
 }

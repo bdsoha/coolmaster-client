@@ -1,4 +1,5 @@
 import { AxiosInstance }      from 'axios'
+import { GenericParser }      from '../parsers'
 import { Parsable, Response } from '../types'
 
 
@@ -23,6 +24,10 @@ export abstract class BaseCommand {
         // }
 
         return parser.parse(data)
+    }
+
+    protected callGeneric(command: string, args: Array<string | number> = []) {
+        return this.call(command, GenericParser, args)
     }
 
     protected boolToInt(value: boolean) {
