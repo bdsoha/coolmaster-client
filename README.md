@@ -29,8 +29,8 @@ import { CoolMasterNetClient } from 'coolmaster-client'
 
 const client = CoolMasterNetClient.create({
     host:   '192.168.1.111',
-    port:   1234,             # Optional, defaults to `10103`
-    secure: true,             # Optional, defaults to `false`
+    port:   1234,             // Optional, defaults to `10103`
+    secure: true,             // Optional, defaults to `false`
     device: '443B960055F0',
 })
 
