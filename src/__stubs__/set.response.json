@@ -1,0 +1,26 @@
+{
+    "command": "set",
+    "data": [
+        "S/N           : 050036F6",
+        "version       : 0.9.4 (PCB Rev 5.7)",
+        "build date    : Apr  4 2022 10:49:33",
+        "application   : Standard",
+        "USB VCOM Port : 1",
+        "baud rate     : 9600",
+        "echo          : 1",
+        "verbose       : 0",
+        "VA mode       : 0",
+        "aserver port  : 10102",
+        "aserver prompt: 1",
+        "deg C/F       : C",
+        "melody        : Murka",
+        "filter        : -",
+        "HVAC lines    : 1",
+        "max indoors   : 256",
+        "PRO size      : 0",
+        "rst on assert : 0",
+        "foreach break : return on error",
+        "MMI lock      : 0"
+    ],
+    "rc": "OK"
+}

@@ -1,1 +1,1 @@
-export { CoolMasterNetConnector } from './CoolMasterNetConnector'
+export { CoolMasterNetClient } from './CoolMasterNetClient'

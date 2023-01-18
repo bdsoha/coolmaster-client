@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
       "declaration": true,
-      "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "esModuleInterop": true,
       "lib": ["es6"],
-      "types": ["node", "jest"],
       "module": "commonjs",
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": true,
@@ -13,9 +13,11 @@
       "noUnusedParameters": true,
       "noUnusedLocals": true,
       "outDir": "dist",
+      "resolveJsonModule": true,
       "sourceMap": true,
       "strictNullChecks": false,
-      "target": "es6"
+      "target": "es6",
+      "types": ["node", "jest"]
   },
   "include": ["src"]
 }
