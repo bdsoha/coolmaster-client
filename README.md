@@ -14,6 +14,8 @@
     <img alt="Code Climate coverage" src="https://img.shields.io/codeclimate/coverage/bdsoha/coolmaster-client?logo=codeclimate&style=for-the-badge">
 </a>
 
+![Banner](coolautomation.jpg)
+
 ---
 
 ## Installation
