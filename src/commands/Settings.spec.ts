@@ -30,8 +30,6 @@ describe('Settings', () => {
         expect(mock.history.get[0].params).toStrictEqual({ command: ['set'] })
     })
 
-    it.todo('[settings] get partial settings values')
-
     it('[reset] reset default values', async () => {
         await call('generic', () => client.reset()).toBeTruthy()
 

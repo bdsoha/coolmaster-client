@@ -1,9 +1,10 @@
-import { BaseCommand }    from './BaseCommand'
-import { SettingsParser } from '../parsers'
+import { BaseCommand }      from './BaseCommand'
+import { SettingsParser }   from '../parsers'
+import { SettingsResponse } from '../types'
 
 
 export class Settings extends BaseCommand {
-    public all() {
+    public all(): Promise<SettingsResponse> {
         return this.call('set', SettingsParser)
     }
 

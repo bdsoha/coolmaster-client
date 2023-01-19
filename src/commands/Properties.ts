@@ -12,7 +12,7 @@ export class Properties extends BaseCommand {
             .join('')
     }
 
-    public all() {
+    public all(): Promise<Properties> {
         return this.call('props', PropertiesParser)
     }
 

@@ -2,26 +2,12 @@ import { BaseParser } from './BaseParser'
 import * as Types     from '../types'
 
 
-type TemperatureRange = [Types.Temperature | null, Types.Temperature | null]
-
-export interface PropsEntry {
-    uid: string
-    name: string
-    visible: boolean
-    modes: Types.Mode[]
-    speeds: Types.Speed[]
-    time: null
-    coolRange: TemperatureRange
-    heatRange: TemperatureRange
-    lock: boolean
-}
-
 export class PropertiesParser extends BaseParser {
     protected static fromLetters<T>(cell: string, type: Types.Parsable): T[] {
         return cell.split(' ').filter(Boolean).map(letter => type.parse(letter))
     }
 
-    protected static fromRange(cell: string, type: Types.Parsable):TemperatureRange {
+    protected static fromRange(cell: string, type: Types.Parsable) {
         // @ts-ignore
         return cell.split(' ').map(letter => {
             if (letter === '--') {
@@ -32,7 +18,7 @@ export class PropertiesParser extends BaseParser {
         })
     }
 
-    public static parse(response: Types.Response): PropsEntry[] {
+    public static parse(response: Types.Response): Types.PropertiesResponse[] {
         const { data } = response
 
         data.splice(0, 2)

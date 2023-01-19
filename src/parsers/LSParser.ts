@@ -1,20 +1,9 @@
 import { BaseParser } from './BaseParser'
 import * as Types     from '../types'
 
-export interface LSEntry {
-    uid: string
-    power: Types.PowerStatus
-    targetTemp: Types.Temperature
-    currentTemp: Types.Temperature
-    speed: Types.Speed
-    mode: Types.Mode
-    failure: Types.FailureStatus
-    filter: Types.Filter
-    demand: number
-}
 
 export class LSParser extends BaseParser {
-    public static parse(response: Types.Response): LSEntry[] {
+    public static parse(response: Types.Response): Types.LSResponse[] {
         return response.data.map(entry => {
             const normalized = this.normalizeRow(entry)
 

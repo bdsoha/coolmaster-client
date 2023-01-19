@@ -38,3 +38,19 @@ const client = CoolMasterNetClient.create({
 
 const results = await client.ls2()
 ```
+
+### Using Environment Variables
+
+Instead of using the `ConnectionConfigs`, you can opt-in to use environment variables.
+The lookup precedence is as follows:
+
+1. Values found in the `ConnectionConfigs`.
+2. Environment variable equivalent.
+3. Default values *(if applicable)*.
+
+| **Name**                   | **Default** |
+|----------------------------|-------------|
+| `COOLMASTER_CLIENT_HOST`   | `undefined` |
+| `COOLMASTER_CLIENT_PORT`   | `10103`     |
+| `COOLMASTER_CLIENT_SECURE` | `false`     |
+| `COOLMASTER_CLIENT_DEVICE` | `undefined` |

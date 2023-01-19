@@ -26,7 +26,7 @@ export abstract class BaseCommand {
         return parser.parse(data)
     }
 
-    protected callGeneric(command: string, args: Array<string | number> = []) {
+    protected callGeneric(command: string, args: Array<string | number> = []): Promise<boolean> {
         return this.call(command, GenericParser, args)
     }
 
