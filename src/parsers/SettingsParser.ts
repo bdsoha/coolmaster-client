@@ -1,7 +1,6 @@
-import { Response }         from '../types'
-import { BaseParser }       from './BaseParser'
-import { ParsableCallback } from '../types/Parsable'
-import { SettingsResponse } from '../types'
+import { BaseParser }                 from './BaseParser'
+import { ParsableCallback }           from '../types/Parsable'
+import { Response, SettingsResponse } from '../types'
 
 
 export class SettingsParser extends BaseParser {

@@ -1,10 +1,10 @@
-import axios                        from 'axios'
-import { Swing }                    from './types/Swing'
-import MockAdapter                  from 'axios-mock-adapter'
-import { json, response }           from './__stubs__'
-import { CoolMasterNetClient }      from './CoolMasterNetClient'
-import { Properties, Settings }     from './commands'
-import { Mode, Speed, Temperature } from './types'
+import axios                           from 'axios'
+import { Swing }                       from './types/Swing'
+import MockAdapter                     from 'axios-mock-adapter'
+import { json, response }              from './__stubs__'
+import { CoolMasterNetClient }         from './CoolMasterNetClient'
+import { Power, Properties, Settings } from './commands'
+import { Mode, Speed, Temperature }    from './types'
 
 
 describe('CoolMasterNetClient', () => {
@@ -55,44 +55,12 @@ describe('CoolMasterNetClient', () => {
         expect(client.properties).toBeInstanceOf(Properties)
     })
 
-    it('[on] without unit-id', async () => {
-        await call('generic', () => client.on()).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['on'] })
-    })
-
-    it('[on] with unit-id', async () => {
-        await call('generic', () => client.on('L7.001')).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['on', 'L7.001'] })
-    })
-
-    it('[allOn] alias of on()', async () => {
-        await call('generic', () => client.allOn()).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['on'] })
-    })
-
-    it('[off] without unit-id', async () => {
-        await call('generic', () => client.off()).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['off'] })
-    })
-
-    it('[off] with unit-id', async () => {
-        await call('generic', () => client.off('L7.001')).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['off', 'L7.001'] })
-    })
-
-    it('[allOff] alias of off()', async () => {
-        await call('generic', () => client.allOff()).toBeTruthy()
-
-        expect(mock.history.get[0].params).toStrictEqual({ command: ['off'] })
-    })
-
     it('[settings] get settings values', async () => {
         expect(client.settings).toBeInstanceOf(Settings)
+    })
+
+    it('[power] get power values', async () => {
+        expect(client.power).toBeInstanceOf(Power)
     })
 
     it('[mode] without unit-id', async () => {

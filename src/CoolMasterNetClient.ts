@@ -1,10 +1,11 @@
+import { BaseCommand }                                from './commands/BaseCommand'
 import { CoolMasterNetConnection, ConnectionConfigs } from './utilities/CoolMasterNetConnection'
 import * as Commands                                  from './commands'
 import * as Parsers                                   from './parsers'
 import * as Types                                     from './types'
 
 
-export class CoolMasterNetClient extends Commands.BaseCommand {
+export class CoolMasterNetClient extends BaseCommand {
     public get properties() {
         return new Commands.Properties(this.client)
     }
@@ -13,28 +14,16 @@ export class CoolMasterNetClient extends Commands.BaseCommand {
         return new Commands.Settings(this.client)
     }
 
-    public ls(uid?: string): Promise<Types.LSResponse> {
+    public get power() {
+        return new Commands.Power(this.client)
+    }
+
+    public ls(uid?: string): Promise<Types.LSResponse[]> {
         return this.call('ls', Parsers.LSParser, [uid])
     }
 
-    public ls2(uid?: string): Promise<Types.LSResponse> {
+    public ls2(uid?: string): Promise<Types.LSResponse[]> {
         return this.call('ls2', Parsers.LSParser, [uid])
-    }
-
-    public on(uid?: string) {
-        return this.callGeneric('on', [uid])
-    }
-
-    public allOn() {
-        return this.on()
-    }
-
-    public off(uid?: string) {
-        return this.callGeneric('off', [uid])
-    }
-
-    public allOff() {
-        return this.off()
     }
 
     public mode(mode: Types.Mode, uid?: string) {
