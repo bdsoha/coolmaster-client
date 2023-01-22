@@ -13,11 +13,11 @@ export class CoolMasterNetClient extends Commands.BaseCommand {
         return new Commands.Settings(this.client)
     }
 
-    public ls(uid?: string): Promise<Types.LSResponse> {
+    public ls(uid?: string): Promise<Types.LSResponse[]> {
         return this.call('ls', Parsers.LSParser, [uid])
     }
 
-    public ls2(uid?: string): Promise<Types.LSResponse> {
+    public ls2(uid?: string): Promise<Types.LSResponse[]> {
         return this.call('ls2', Parsers.LSParser, [uid])
     }
 
