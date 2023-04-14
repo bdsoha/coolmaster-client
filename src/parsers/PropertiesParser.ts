@@ -24,20 +24,25 @@ export class PropertiesParser extends BaseParser {
         data.splice(0, 2)
 
         // @ts-ignore
-        return data.map(entry => {
-            const normalized = this.normalizeRow(entry, '|')
+        return Array
+            .from(
+                { length: data.length / 2 },
+                (_, i) => data[2 * i] + data[2 * i + 1]
+            )
+            .map(entry => {
+                const normalized = this.normalizeRow(entry, '|')
 
-            return {
-                uid:       normalized[0],
-                name:      normalized[1],
-                visible:   this.booleanFromString(normalized[2]),
-                modes:     this.fromLetters(normalized[3], Types.Mode),
-                speeds:    this.fromLetters(normalized[4], Types.Speed),
-                time:      this.fromRange(normalized[5], null),
-                coolRange: this.fromRange(normalized[6], Types.Temperature),
-                heatRange: this.fromRange(normalized[7], Types.Temperature),
-                lock:      this.booleanFromString(normalized[8])
-            }
-        })
+                return {
+                    uid:       normalized[0],
+                    name:      normalized[1],
+                    visible:   this.booleanFromString(normalized[2]),
+                    modes:     this.fromLetters(normalized[3], Types.Mode),
+                    speeds:    this.fromLetters(normalized[4], Types.Speed),
+                    time:      this.fromRange(normalized[5], null),
+                    coolRange: this.fromRange(normalized[6], Types.Temperature),
+                    heatRange: this.fromRange(normalized[7], Types.Temperature),
+                    lock:      this.booleanFromString(normalized[8])
+                }
+            })
     }
 }
